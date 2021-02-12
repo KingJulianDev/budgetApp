@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    width: 80%;
+    height: 100vh;
+    background-color: grey;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.header{
+    height: 10%;
+}
+
+.main{
+    height: 90%;
+    display: flex;
+}
+
+.left-sidebar{
+    width: 35%;
+    height: 100%;
+    background-color: lightgray;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.right-sidebar{
+    width: 60%;
+    height: 100%;
+}
+
+.option{
+    display: flex;
+    align-items: baseline;
+    border: 1px solid black;
+    border-radius: 50%;
+    width: 50%;
+    height: 50%;
+    background-color: yellow;
+}
