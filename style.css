@@ -1,46 +1,76 @@
 *{
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
-.container{
-    width: 80%;
-    height: 100vh;
-    background-color: grey;
+body{
+    box-sizing: border-box;
+}
+
+.main-info{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 100%;
+    height: 30%;
+    padding-top: 10%;
+    margin-bottom: 10%;
+}
+
+.main-info > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.i{
+    width: 30%;
+    height: 40%;
+    background-color: greenyellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.expenses-i{
+    background-color: red;
+}
+
+.balans-i{
+    background-color: royalblue;
+}
+
+.show-history{
+    width: 45%;
+    height: 10%;
+    background-color: sandybrown;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px black;
 }
 
-.header{
-    height: 10%;
-}
-
-.main{
-    height: 90%;
-    display: flex;
-}
-
-.left-sidebar{
-    width: 35%;
-    height: 100%;
-    background-color: lightgray;
+.bottom-panel{
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 1fr);
-}
-
-.right-sidebar{
-    width: 60%;
-    height: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    height: 15%;
+    position: absolute;
+    bottom: 0;
 }
 
 .option{
-    display: flex;
-    align-items: baseline;
-    border: 1px solid black;
+    background-color: lightgreen;
     border-radius: 50%;
-    width: 50%;
-    height: 50%;
-    background-color: yellow;
+}
+
+.option-minus{
+    background-color: lightsalmon;
+}
+
+.option-info{
+    background-color: lightskyblue;
 }
