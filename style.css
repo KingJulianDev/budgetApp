@@ -4,7 +4,7 @@
 }
 
 h1{
-    margin: .5rem 0 1.5rem 0;
+    margin: 1rem 0 2rem 0;
 }
 
 .main{
@@ -17,8 +17,9 @@ h1{
 }
 
 .left-sidebar{
-    width: 30%;
+    width: 50%;
     height: 100%;
+    margin-right: 3rem;
 }
 
 .form{
@@ -35,7 +36,7 @@ h1{
 
 .plus-name, .minus-name{
     font-size: 1.5rem;
-    font-weight: 400;
+    font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
@@ -77,4 +78,29 @@ input{
 .minus-button{
     color: red;
     border: 1px solid red;
+}
+
+.right-sidebar{
+    width: 100%;
+}
+
+.info-panel{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.info-panel > div{
+    padding: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.info-label{
+    display: flex;
+    justify-content: center;
+    padding: 0 1.5rem 1.5rem 1.5rem !important;
+}
+
+.info-value{
+    display: flex;
+    justify-content: center;
 }
