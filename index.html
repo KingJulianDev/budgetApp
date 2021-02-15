@@ -16,16 +16,18 @@
             <div class="left-sidebar">
                 <div class="form plus-form">
                     <div class="plus-name">Enter your incomes</div>
-                    <input type="number" class="plus-input">
-                    <div class="button plus-button">Add budget</div>
+                    <input type="text" class="plus-input-name">
+                    <div class="plus-value">Amount of incomes</div>
+                    <input type="number" class="input plus-input-value">
+                    <div class="button plus-button green">Add income</div>
                 </div>
     
                 <div class="form minus-form">
-                    <div class="minus-name">Enter your expenses</div>
-                    <input type="text" class="minus-input">
+                    <div class="minus-name">Enter your expense</div>
+                    <input type="text" class="minus-input-name">
                     <div class="minus-value">Amount of expenses</div>
                     <input type="number" class="input minus-input-value">
-                    <div class="button minus-button">Add expense</div>
+                    <div class="button minus-button red">Add expense</div>
                 </div>
             </div>
     
@@ -34,12 +36,12 @@
                     <div class="info-label">BUDGET</div>
                     <div class="info-label">EXPENSES</div>
                     <div class="info-label">BALANCE</div>
-                    <div class="info-img"></div>
-                    <div class="info-img"></div>
-                    <div class="info-img"></div>
-                    <div class="info-value">2500$</div>
-                    <div class="info-value">100$</div>
-                    <div class="info-value">2400$</div>
+                    <div class="info-img green"><i class="fas fa-donate"></i></div>
+                    <div class="info-img red"><i class="fas fa-hand-holding-usd"></i></div>
+                    <div class="info-img"><i class="fas fa-dollar-sign"></i></div>
+                    <div class="info-value green">$<span class="budget">0</span></div>
+                    <div class="info-value red">$<span class="expenses">0</span></div>
+                    <div class="info-value">$<span class="balance">0</span></div>
                 </div>
             </div>
     
@@ -47,6 +49,7 @@
     </div>
     
 
+    <script src="https://kit.fontawesome.com/8527f144f4.js" crossorigin="anonymous"></script>
     <script src="scripts.js"></script>
 </body>
 </html>
