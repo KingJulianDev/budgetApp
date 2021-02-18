@@ -1,52 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>BudgetApp</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="main">
-        <h1>BUDGET APP</h1>
+      <h1>BUDGET APP</h1>
 
-        <div class="content">
-    
-            <div class="left-sidebar">
-                <div class="form plus-form">
-                    <div class="plus-name">Enter your incomes</div>
-                    <input type="text" class="plus-input-name">
-                    <div class="plus-value">Amount of incomes</div>
-                    <input type="number" class="input plus-input-value">
-                    <div class="button plus-button green">Add income</div>
-                </div>
-    
-                <div class="form minus-form">
-                    <div class="minus-name">Enter your expense</div>
-                    <input type="text" class="minus-input-name">
-                    <div class="minus-value">Amount of expenses</div>
-                    <input type="number" class="input minus-input-value">
-                    <div class="button minus-button red">Add expense</div>
-                </div>
+      <div class="content">
+        <div class="left-sidebar">
+          <div class="form plus-form">
+            <div class="plus-name">Enter your incomes</div>
+            <input type="text" class="plus-input-name" />
+            <div class="plus-value">Amount of incomes</div>
+            <input type="number" class="input plus-input-value" />
+            <div class="button plus-button green">Add income</div>
+          </div>
+
+          <div class="form minus-form">
+            <div class="minus-name">Enter your expense</div>
+            <input type="text" class="minus-input-name" />
+            <div class="minus-value">Amount of expenses</div>
+            <input type="number" class="input minus-input-value" />
+            <div class="button minus-button red">Add expense</div>
+          </div>
+        </div>
+
+        <div class="right-sidebar">
+          <div class="info-panel">
+            <div class="info-label">BUDGET</div>
+            <div class="info-label">EXPENSES</div>
+            <div class="info-label">BALANCE</div>
+            <div class="info-img green"><i class="fas fa-donate"></i></div>
+            <div class="info-img red">
+              <i class="fas fa-hand-holding-usd"></i>
             </div>
-    
-            <div class="right-sidebar">
-                <div class="info-panel">
-                    <div class="info-label">BUDGET</div>
-                    <div class="info-label">EXPENSES</div>
-                    <div class="info-label">BALANCE</div>
-                    <div class="info-img green"><i class="fas fa-donate"></i></div>
-                    <div class="info-img red"><i class="fas fa-hand-holding-usd"></i></div>
-                    <div class="info-img"><i class="fas fa-dollar-sign"></i></div>
-                    <div class="info-value green">$<span class="budget">0</span></div>
-                    <div class="info-value red">$<span class="expenses">0</span></div>
-                    <div class="info-value">$<span class="balance">0</span></div>
-                </div>
+            <div class="info-img"><i class="fas fa-dollar-sign"></i></div>
+            <div class="info-value green">$<span class="budget">0</span></div>
+            <div class="info-value red">$<span class="expenses">0</span></div>
+            <div class="info-value">$<span class="balance">0</span></div>
+          </div>
 
-                <div class="history">
-                    <ul>
-                        <!-- <li>
+          <div class="history">
+            <ul class="ul">
+              <!-- <li>
                             <div class="history-label">Bought the car</div>
                             <div class="history-value">$100</div>
                             <div class="li-item-options">
@@ -70,16 +71,22 @@
                                 <div class="item-option delete-history-item">+</div>
                             </div>
                         </li> -->
-                    </ul>
-                </div>
-            </div>
-    
+            </ul>
+          </div>
         </div>
+      </div>
     </div>
-    
-    <button id="btn">show only incomes</button>
 
-    <script src="https://kit.fontawesome.com/8527f144f4.js" crossorigin="anonymous"></script>
+    <button class="btn" id="btn">show only incomes</button>
+    <button class="btn clear-btn">clear</button>
+
+    <button class="btn sortIncome">Incomes</button>
+    <button class="btn sortExpense">Expenses</button>
+
+    <script
+      src="https://kit.fontawesome.com/8527f144f4.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="scripts.js"></script>
-</body>
+  </body>
 </html>
