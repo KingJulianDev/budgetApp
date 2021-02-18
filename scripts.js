@@ -47,7 +47,6 @@ addIncome.onclick = () => {
   idOfActivities++
   plusInputValue.value = ''
   plusInputName.value = ''
-  console.log(historyArr)
 }
 
 addExpense.onclick = () => {
@@ -69,17 +68,8 @@ addExpense.onclick = () => {
   idOfActivities++
   minusInputValue.value = ''
   minusInputName.value = ''
-  console.log(historyArr)
 }
-
-let test = document.getElementById('btn')
-test.onclick = () => {
-  console.log(historyArr)
-  let liList = Array.from(document.querySelectorAll('.history-item'))
-  console.log(Array.from(liList))
-  console.log(typeof liList)
-}
-
+/////////test//////////////////////////////////////////////////////
 const ul = document.querySelector('.ul')
 const clear = document.querySelector('.clear-btn')
 clear.onclick = () => {
@@ -89,7 +79,6 @@ clear.onclick = () => {
 function sortHistoryItems(param) {
   let sortedItems = historyArr.filter((el) => el.type === param)
   ul.innerHTML = ''
-  console.log(sortedItems)
   sortedItems.forEach((el) => {
     createHistoryItem(el)
   })
@@ -97,6 +86,14 @@ function sortHistoryItems(param) {
 
 const sortIncome = document.querySelector('.sortIncome')
 const sortExpense = document.querySelector('.sortExpense')
+const sortAll = document.querySelector('.sortAll')
+
+sortAll.onclick = () => {
+  ul.innerHTML = ''
+  historyArr.forEach((el) => {
+    createHistoryItem(el)
+  })
+}
 
 sortIncome.onclick = () => {
   sortHistoryItems('income')
