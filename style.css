@@ -78,6 +78,8 @@ h1 {
 
 .content {
   width: 100%;
+  max-height: 100%;
+  overflow: hidden;
   display: flex;
   background-color: lightgray;
 }
@@ -205,6 +207,10 @@ li > div {
   padding-left: 1rem;
 }
 
+.history {
+  height: inherit;
+}
+
 .li-item-options {
   display: flex;
 }
@@ -218,6 +224,7 @@ li > div {
   align-items: center;
   margin-right: 10px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .btn {
@@ -227,4 +234,14 @@ li > div {
   margin-top: 5px;
   height: 3rem;
   width: 140px;
+}
+
+.edit-history-item {
+  background-color: red;
+  color: white;
+}
+
+.delete-history-item {
+  background-color: #0a6489;
+  color: white;
 }

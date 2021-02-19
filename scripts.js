@@ -21,8 +21,8 @@ function createHistoryItem(el) {
       <div class="history-value">$${el.value}</div>
 
       <div class="li-item-options">
-          <div class="item-option edit-history-item">X</div>
-          <div class="item-option delete-history-item">?</div>
+          <div class="item-option edit-history-item" id="${el.id}" onclick="testF()">X</div>
+          <div class="item-option delete-history-item" id="${el.id}">?</div>
       </div>
     </li>`
   )
@@ -87,6 +87,7 @@ function sortHistoryItems(param) {
 const sortIncome = document.querySelector('.sortIncome')
 const sortExpense = document.querySelector('.sortExpense')
 const sortAll = document.querySelector('.sortAll')
+const testingBtn = document.querySelector('.test')
 
 sortAll.onclick = () => {
   ul.innerHTML = ''
@@ -101,4 +102,22 @@ sortIncome.onclick = () => {
 
 sortExpense.onclick = () => {
   sortHistoryItems('expense')
+}
+
+let testingObj = {
+  id: 5,
+  type: 'income',
+  name: 'test',
+  value: 19,
+  color: 'green',
+}
+
+testingBtn.onclick = () => {
+  for (let i = 0; i < 5; i++) {
+    createHistoryItem(testingObj)
+  }
+}
+
+function testF() {
+  console.log('from delete button')
 }
