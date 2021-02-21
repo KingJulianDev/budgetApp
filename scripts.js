@@ -5,12 +5,19 @@ const minusInputName = document.querySelector('.minus-input-name')
 const addIncome = document.querySelector('.plus-button')
 const addExpense = document.querySelector('.minus-button')
 const historyList = document.querySelector('.history')
+const ul = document.querySelector('.ul')
 
 let currentBudget = 0
 let currentExpenses = 0
 let currentBalance = 0
 let historyArr = []
 let idOfActivities = 0
+
+///////////////////////
+let budget = 0
+let expenses = 0
+let balance = 0
+///////////////////////
 
 function createHistoryItem(el) {
   ul.insertAdjacentHTML(
@@ -21,56 +28,113 @@ function createHistoryItem(el) {
       <div class="history-value">$${el.value}</div>
 
       <div class="li-item-options">
-          <div class="item-option edit-history-item" id="${el.id}" onclick="testF()">X</div>
-          <div class="item-option delete-history-item" id="${el.id}">?</div>
+          <div class="item-option delete-history-item" id="${el.id}">X</div>
+          <div class="item-option edit-history-item" id="${el.id}">?</div>
       </div>
     </li>`
   )
 }
 
-addIncome.onclick = () => {
-  currentBudget === 0
-    ? (currentBudget = Number(plusInputValue.value))
-    : (currentBudget += Number(plusInputValue.value))
-  document.querySelector('.budget').innerHTML = currentBudget
-  currentBalance = currentBudget - currentExpenses
-  document.querySelector('.balance').innerHTML = currentBalance
-  let historyItem = {
-    id: idOfActivities,
-    type: 'income',
-    name: plusInputName.value,
-    value: Number(plusInputValue.value),
-    color: 'green',
+function counting() {
+  budget = 0
+  expenses = 0
+
+  historyArr.forEach((el) => {
+    if (el.type === 'income') {
+      budget += el.value
+    } else {
+      expenses += el.value
+    }
+  })
+  document.querySelector('.budget').innerHTML = budget
+  document.querySelector('.expenses').innerHTML = expenses
+  document.querySelector('.balance').innerHTML = budget - expenses
+}
+
+/* function addOnclickOnDeleteBtns() {
+  let deleteButtons = document.querySelectorAll('.delete-history-item')
+  deleteButtons.forEach((el) => {
+    el.onclick = () => {
+      console.log(`delete from ${el.id}`)
+      let items = Array.from(document.querySelectorAll('.history-item'))
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].id === el.id) {
+          items[i].remove()
+        }
+      }
+      counting()
+    }
+  })
+} */
+
+function addOnclickOnDeleteBtns() {
+  let deleteButtons = document.querySelectorAll('.delete-history-item')
+  let historyItems = document.querySelectorAll('.history-item')
+  deleteButtons.forEach((el) => {
+    el.onclick = (target) => {
+      let elid = +target.target.id
+      console.log(typeof elid)
+      historyItems[elid].remove()
+      for (let i = 0; i < historyArr.length; i++) {
+        if (historyArr[i].id === elid) {
+          historyArr.splice(i, 1)
+          break
+        }
+      }
+      counting()
+    }
+  })
+}
+
+class CreateHistoryItem {
+  constructor(id, type, name, value, color) {
+    this.id = id
+    this.type = type
+    this.name = name
+    this.value = value
+    this.color = color
   }
+}
+
+addIncome.onclick = () => {
+  let historyItem = new CreateHistoryItem(
+    idOfActivities,
+    'income',
+    plusInputName.value,
+    Number(plusInputValue.value),
+    'green'
+  )
+
   historyArr.push(historyItem)
-  createHistoryItem(historyItem, 'green', 'income')
+  createHistoryItem(historyItem)
   idOfActivities++
   plusInputValue.value = ''
   plusInputName.value = ''
+  addOnclickOnDeleteBtns()
+  counting()
+  console.log(Array.from(document.querySelectorAll('.history-item')))
 }
 
 addExpense.onclick = () => {
-  currentExpenses === 0
-    ? (currentExpenses = Number(minusInputValue.value))
-    : (currentExpenses += Number(minusInputValue.value))
-  document.querySelector('.expenses').innerHTML = currentExpenses
-  currentBalance = currentBudget - currentExpenses
-  document.querySelector('.balance').innerHTML = currentBalance
-  let historyItem = {
-    id: idOfActivities,
-    type: 'expense',
-    name: minusInputName.value,
-    value: Number(minusInputValue.value),
-    color: 'red',
-  }
+  let historyItem = new CreateHistoryItem(
+    idOfActivities,
+    'expense',
+    minusInputName.value,
+    Number(minusInputValue.value),
+    'red'
+  )
+
   historyArr.push(historyItem)
   createHistoryItem(historyItem, 'red', 'expense')
   idOfActivities++
   minusInputValue.value = ''
   minusInputName.value = ''
+  addOnclickOnDeleteBtns()
+  counting()
+  console.log(Array.from(document.querySelectorAll('.history-item')))
 }
 /////////test//////////////////////////////////////////////////////
-const ul = document.querySelector('.ul')
+
 const clear = document.querySelector('.clear-btn')
 clear.onclick = () => {
   ul.innerHTML = ''
@@ -104,20 +168,52 @@ sortExpense.onclick = () => {
   sortHistoryItems('expense')
 }
 
-let testingObj = {
-  id: 5,
-  type: 'income',
-  name: 'test',
-  value: 19,
-  color: 'green',
-}
+let otladka = [
+  { id: 0, type: 'income', name: 'test0', value: 4, color: 'green' },
+  { id: 1, type: 'expense', name: 'test1', value: 2, color: 'red' },
+  { id: 2, type: 'income', name: 'test2', value: 4, color: 'green' },
+  { id: 3, type: 'income', name: 'test3', value: 8, color: 'green' },
+  { id: 4, type: 'expense', name: 'test4', value: 4, color: 'red' },
+]
 
 testingBtn.onclick = () => {
   for (let i = 0; i < 5; i++) {
-    createHistoryItem(testingObj)
+    createHistoryItem(otladka[i])
+    historyArr.push(otladka[i])
   }
 }
 
-function testF() {
-  console.log('from delete button')
+/* let budgetArr = [
+  {
+    id: 0,
+    budget: 150,
+  },
+  {
+    id: 1,
+    budget: 75,
+  },
+  {
+    id: 2,
+    budget: 15,
+  },
+  {
+    id: 3,
+    budget: 200,
+  },
+  {
+    id: 4,
+    budget: 125,
+  },
+]
+
+let sum = 0
+
+function getSum() {
+  for (let i = 0; i < budgetArr.length; i++) {
+    sum += budgetArr[i].budget
+  }
 }
+
+getSum()
+
+console.log(sum) */
