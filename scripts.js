@@ -73,8 +73,13 @@ function addOnclickOnDeleteBtns() {
   deleteButtons.forEach((el) => {
     el.onclick = (target) => {
       let elid = +target.target.id
-      console.log(typeof elid)
-      historyItems[elid].remove()
+      for (let i = 0; i < historyItems.length; i++) {
+        if (historyItems[i].id == elid) {
+          historyItems[i].remove()
+          break
+        }
+      }
+      /* historyItems[elid].remove() */
       for (let i = 0; i < historyArr.length; i++) {
         if (historyArr[i].id === elid) {
           historyArr.splice(i, 1)
