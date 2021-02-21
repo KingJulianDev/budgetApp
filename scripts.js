@@ -163,14 +163,17 @@ sortAll.onclick = () => {
   historyArr.forEach((el) => {
     createHistoryItem(el)
   })
+  addOnclickOnDeleteBtns()
 }
 
 sortIncome.onclick = () => {
   sortHistoryItems('income')
+  addOnclickOnDeleteBtns()
 }
 
 sortExpense.onclick = () => {
   sortHistoryItems('expense')
+  addOnclickOnDeleteBtns()
 }
 
 let otladka = [
