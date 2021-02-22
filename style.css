@@ -143,12 +143,14 @@ input {
   color: red;
 }
 
-.plus-button:hover {
+.plus-button:hover,
+.plus-categories-button:hover {
   background-color: green;
   color: white;
 }
 
-.minus-button:hover {
+.minus-button:hover,
+.minus-categories-button:hover {
   background-color: red;
   color: white;
 }
@@ -244,4 +246,44 @@ li > div {
 .delete-history-item {
   background-color: #0a6489;
   color: white;
+}
+/* --------------------------------------------- */
+.row {
+  display: flex;
+  width: 100%;
+}
+
+.plus-categories-button,
+.minus-categories-button {
+  border-left: 0;
+  border-radius: 0 5px 5px 0;
+  width: 70%;
+}
+
+.plus-input-value,
+.minus-input-value {
+  border-radius: 5px 0 0 5px;
+  width: 30%;
+}
+
+.minus-categories-button {
+  border: 1px solid red;
+  border-left: 0;
+}
+/* ---------------------------------- */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 2.5rem;
+  left: 0;
+  width: 100%;
+  background-color: lightgreen;
+  display: none;
+}
+
+.dropdown:hover .dropdown-list {
+  display: block;
 }

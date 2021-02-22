@@ -11,7 +11,9 @@ let currentBudget = 0
 let currentExpenses = 0
 let currentBalance = 0
 let historyArr = []
+let categoriesArr = [{ id: 0, name: 'New categorie' }]
 let idOfActivities = 0
+let idOfCategories = 0
 
 ///////////////////////
 let budget = 0
@@ -51,22 +53,6 @@ function counting() {
   document.querySelector('.balance').innerHTML = budget - expenses
 }
 
-/* function addOnclickOnDeleteBtns() {
-  let deleteButtons = document.querySelectorAll('.delete-history-item')
-  deleteButtons.forEach((el) => {
-    el.onclick = () => {
-      console.log(`delete from ${el.id}`)
-      let items = Array.from(document.querySelectorAll('.history-item'))
-      for (let i = 0; i < items.length; i++) {
-        if (items[i].id === el.id) {
-          items[i].remove()
-        }
-      }
-      counting()
-    }
-  })
-} */
-
 function addOnclickOnDeleteBtns() {
   let deleteButtons = document.querySelectorAll('.delete-history-item')
   let historyItems = document.querySelectorAll('.history-item')
@@ -79,7 +65,6 @@ function addOnclickOnDeleteBtns() {
           break
         }
       }
-      /* historyItems[elid].remove() */
       for (let i = 0; i < historyArr.length; i++) {
         if (historyArr[i].id === elid) {
           historyArr.splice(i, 1)
