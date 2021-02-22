@@ -5,13 +5,15 @@ const minusInputName = document.querySelector('.minus-input-name')
 const addIncome = document.querySelector('.plus-button')
 const addExpense = document.querySelector('.minus-button')
 const historyList = document.querySelector('.history')
-const ul = document.querySelector('.ul')
+const ul = document.querySelector('.ul') // не акткуально
 
 let currentBudget = 0
 let currentExpenses = 0
 let currentBalance = 0
 let historyArr = []
-let categoriesArr = [{ id: 0, name: 'New categorie' }]
+let categoriesArr = [
+  /* { id: 0, name: 'New categorie' } */
+]
 let idOfActivities = 0
 let idOfCategories = 0
 
@@ -75,6 +77,19 @@ function addOnclickOnDeleteBtns() {
     }
   })
 }
+function addOnclickOnDropdownItems(id) {
+  console.log(id)
+}
+
+function renderCategoriesItems() {
+  let ul = document.querySelector('.dropdown-list')
+  categoriesArr.forEach((el) => {
+    ul.insertAdjacentHTML(
+      'beforeend',
+      `<li class="dropdown-item" id="${el.id}" onclick="addOnclickOnDropdownItems(${el.id})">${el.name}</li>`
+    )
+  })
+}
 
 class CreateHistoryItem {
   constructor(id, type, name, value, color) {
@@ -127,7 +142,7 @@ addExpense.onclick = () => {
 
 const clear = document.querySelector('.clear-btn')
 clear.onclick = () => {
-  ul.innerHTML = ''
+  renderCategoriesItems()
 }
 
 function sortHistoryItems(param) {

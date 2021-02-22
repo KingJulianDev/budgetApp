@@ -143,14 +143,24 @@ input {
   color: red;
 }
 
-.plus-button:hover,
+/* .plus-button:hover,
 .plus-categories-button:hover {
+  background-color: green;
+  color: white;
+} */
+
+/* .minus-button:hover,
+.minus-categories-button:hover {
+  background-color: red;
+  color: white;
+} */
+
+.green:hover {
   background-color: green;
   color: white;
 }
 
-.minus-button:hover,
-.minus-categories-button:hover {
+.red:hover {
   background-color: red;
   color: white;
 }
@@ -236,6 +246,9 @@ li > div {
   margin-top: 5px;
   height: 3rem;
   width: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .edit-history-item {
@@ -276,14 +289,46 @@ li > div {
 }
 
 .dropdown-list {
+  box-sizing: border-box;
   position: absolute;
-  top: 2.5rem;
+  top: 2.4rem;
   left: 0;
   width: 100%;
   background-color: lightgreen;
   display: none;
+  padding-top: 0.1rem;
 }
 
 .dropdown:hover .dropdown-list {
   display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* ----------------------------- */
+.test-panel {
+  display: flex;
+}
+/* ----------------------------- */
+.add-new-categorie-form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.new-categorie-input {
+  margin: 0;
+  padding: 0;
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  padding-left: 10px;
+}
+
+.new-categorie-btn {
+  margin: 0;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  text-align: center;
 }
