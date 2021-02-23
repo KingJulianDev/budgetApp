@@ -6,6 +6,20 @@ const addIncome = document.querySelector('.plus-button')
 const addExpense = document.querySelector('.minus-button')
 const historyList = document.querySelector('.history')
 const ul = document.querySelector('.ul') // не акткуально
+const addNewCategorie = document.querySelector('.new-categorie-btn')
+const incomeDropdownList = document.querySelector('.categories-dropdown-list')
+const newCategorieInput = document.querySelector('.new-categorie-input')
+
+addNewCategorie.onclick = () => {
+  categoriesArr.push({
+    id: idOfCategorie,
+    name: newCategorieInput.value,
+  })
+  newCategorieInput.value = ''
+  console.log(categoriesArr)
+  createCategoriesItem()
+  idOfCategorie++
+}
 
 let currentBudget = 0
 let currentExpenses = 0
@@ -15,7 +29,7 @@ let categoriesArr = [
   /* { id: 0, name: 'New categorie' } */
 ]
 let idOfActivities = 0
-let idOfCategories = 0
+let idOfCategorie = 0
 
 ///////////////////////
 let budget = 0
@@ -23,14 +37,25 @@ let expenses = 0
 let balance = 0
 ///////////////////////
 
+function createCategoriesItem() {
+  for (let i = 0; i < categoriesArr.length; i++) {
+    incomeDropdownList.insertAdjacentHTML(
+      'beforeend',
+      `<li class="categories-dropdown-item" id="${categoriesArr[i].id}" onclick=onClickOnCategoriesItem(${categoriesArr[i].id})>${categoriesArr[i].name}</li>`
+    )
+  }
+}
+
+function onClickOnCategoriesItem(id) {
+  console.log(id)
+}
+
 function createHistoryItem(el) {
   ul.insertAdjacentHTML(
     'afterbegin',
     `<li class="${el.type} history-item" id="${el.id}">
       <div class="history-label ${el.color}">${el.name}</div>
-
       <div class="history-value">$${el.value}</div>
-
       <div class="li-item-options">
           <div class="item-option delete-history-item" id="${el.id}">X</div>
           <div class="item-option edit-history-item" id="${el.id}">?</div>
@@ -81,7 +106,7 @@ function addOnclickOnDropdownItems(id) {
   console.log(id)
 }
 
-function renderCategoriesItems() {
+function renderHistoryItem() {
   let ul = document.querySelector('.dropdown-list')
   categoriesArr.forEach((el) => {
     ul.insertAdjacentHTML(
@@ -142,7 +167,7 @@ addExpense.onclick = () => {
 
 const clear = document.querySelector('.clear-btn')
 clear.onclick = () => {
-  renderCategoriesItems()
+  renderHistoryItem()
 }
 
 function sortHistoryItems(param) {
@@ -213,15 +238,11 @@ testingBtn.onclick = () => {
     budget: 125,
   },
 ]
-
 let sum = 0
-
 function getSum() {
   for (let i = 0; i < budgetArr.length; i++) {
     sum += budgetArr[i].budget
   }
 }
-
 getSum()
-
 console.log(sum) */

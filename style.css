@@ -284,11 +284,11 @@ li > div {
   border-left: 0;
 }
 /* ---------------------------------- */
-.dropdown {
+.categories-dropdown {
   position: relative;
 }
 
-.dropdown-list {
+.categories-dropdown-list {
   box-sizing: border-box;
   position: absolute;
   top: 2.4rem;
@@ -299,11 +299,11 @@ li > div {
   padding-top: 0.1rem;
 }
 
-.dropdown:hover .dropdown-list {
+.categories-dropdown:hover .categories-dropdown-list {
   display: block;
 }
 
-.dropdown-item {
+.categories-dropdown-item {
   display: flex;
   justify-content: center;
   align-items: center;
