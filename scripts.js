@@ -9,6 +9,23 @@ const ul = document.querySelector('.ul') // не акткуально
 const addNewCategorie = document.querySelector('.new-categorie-btn')
 const incomeDropdownList = document.querySelector('.categories-dropdown-list')
 const newCategorieInput = document.querySelector('.new-categorie-input')
+const selectCategorie = document.getElementById('select-categorie')
+const incomeCategoriesLabel = document.querySelector('.income-dropdown-label')
+
+incomeCategoriesLabel.onclick = (target) => {
+  if (target.target.id === 'select-categorie') {
+    if (isDropdownListVisible) {
+      document.querySelector('.categories-dropdown-list').style.display = 'none'
+      isDropdownListVisible = !isDropdownListVisible
+    } else {
+      document.querySelector('.categories-dropdown-list').style.display =
+        'block'
+      isDropdownListVisible = !isDropdownListVisible
+    }
+  } else {
+    return
+  }
+}
 
 addNewCategorie.onclick = () => {
   categoriesArr.push({
@@ -20,6 +37,7 @@ addNewCategorie.onclick = () => {
   idOfCategorie++
 }
 
+let isDropdownListVisible = false
 let currentBudget = 0
 let currentExpenses = 0
 let currentBalance = 0
@@ -40,7 +58,6 @@ function createCategoriesItem() {
   let arr = Array.from(incomeDropdownList.children)
   let length = arr.length
   for (let y = 1; y < length; y++) {
-    //if (y === 0) continue
     arr[y].remove()
   }
   for (let i = 0; i < categoriesArr.length; i++) {
@@ -52,7 +69,12 @@ function createCategoriesItem() {
 }
 
 function onClickOnCategoriesItem(id) {
-  console.log(id)
+  /* console.log(typeof el)
+  selectCategorie.innerHTML = el */
+
+  incomeCategoriesLabel.innerHTML = categoriesArr[id].name
+  document.querySelector('.categories-dropdown-list').style.display = 'none'
+  isDropdownListVisible = !isDropdownListVisible
 }
 
 function createHistoryItem(el) {
