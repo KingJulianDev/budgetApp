@@ -71,6 +71,15 @@ h1 {
   margin: 1rem 0 2rem 0;
 }
 
+ul::-webkit-scrollbar {
+  width: 1em;
+}
+
+ul::-webkit-scrollbar-thumb {
+  background-color: green;
+  border-radius: 5px;
+}
+
 .main {
   width: 90%;
   margin: 0 auto;
@@ -204,7 +213,7 @@ ul {
 li {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  height: 3rem;
+  height: 2rem;
 }
 
 li > div {
@@ -289,14 +298,17 @@ li > div {
 }
 
 .categories-dropdown-list {
+  max-height: 12rem;
+  overflow-y: scroll;
   box-sizing: border-box;
   position: absolute;
   top: 2.4rem;
   left: 0;
   width: 100%;
-  background-color: lightgreen;
+  background-color: black /* #0a6489 */;
   display: none;
   padding-top: 0.1rem;
+  border-radius: 0 0 5px 5px;
 }
 
 .categories-dropdown:hover .categories-dropdown-list {
@@ -307,6 +319,14 @@ li > div {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.categories-dropdown-item:first-child {
+  height: 3rem;
+}
+
+.categories-dropdown-item:last-child {
+  border-left-color: red;
 }
 /* ----------------------------- */
 .test-panel {

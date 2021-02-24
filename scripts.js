@@ -16,7 +16,6 @@ addNewCategorie.onclick = () => {
     name: newCategorieInput.value,
   })
   newCategorieInput.value = ''
-  console.log(categoriesArr)
   createCategoriesItem()
   idOfCategorie++
 }
@@ -38,10 +37,16 @@ let balance = 0
 ///////////////////////
 
 function createCategoriesItem() {
+  let arr = Array.from(incomeDropdownList.children)
+  let length = arr.length
+  for (let y = 1; y < length; y++) {
+    //if (y === 0) continue
+    arr[y].remove()
+  }
   for (let i = 0; i < categoriesArr.length; i++) {
     incomeDropdownList.insertAdjacentHTML(
       'beforeend',
-      `<li class="categories-dropdown-item" id="${categoriesArr[i].id}" onclick=onClickOnCategoriesItem(${categoriesArr[i].id})>${categoriesArr[i].name}</li>`
+      `<li class="categories-dropdown-item income-categorie-item" id="${categoriesArr[i].id}" onclick=onClickOnCategoriesItem(${categoriesArr[i].id})>${categoriesArr[i].name}</li>`
     )
   }
 }
