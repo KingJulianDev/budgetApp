@@ -298,7 +298,8 @@ li > div {
   border-left: 0;
 }
 /* ---------------------------------- */
-.income-dropdown-label {
+.income-dropdown-label,
+.expense-dropdown-label {
   position: absolute;
   width: 70%;
   height: 2.5rem;
@@ -314,7 +315,7 @@ li > div {
   margin-left: 30%;
 }
 
-.categories-dropdown-list {
+.income-categories-dropdown-list {
   max-height: 12rem;
   overflow-y: scroll;
   box-sizing: border-box;

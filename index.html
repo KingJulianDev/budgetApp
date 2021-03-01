@@ -24,14 +24,15 @@
                 placeholder="Amount"
               />
               <!-- Доходы дропдаун -->
-              <div class="income-dropdown-label green" id="select-categorie">
+              <div
+                class="income-dropdown-label green"
+                id="select-categorie-income"
+              >
                 Categorie
               </div>
-              <div
-                class="button plus-categories-button green categories-dropdown"
-              >
+              <div class="button plus-categories-button categories-dropdown">
                 <!-- Categorie -->
-                <ul class="categories-dropdown-list">
+                <ul class="income-categories-dropdown-list">
                   <li class="categories-dropdown-item">
                     <div class="add-new-categorie-form">
                       <input type="text" class="new-categorie-input" />
@@ -49,8 +50,8 @@
             <div class="button plus-button green">Add income</div>
           </div>
 
+          <!-- Test ///////////////////////////////////////////////////////-->
           <div class="form minus-form">
-            <!-- Форма добавления расхода -->
             <div class="minus-name">Enter your expenses</div>
             <div class="row">
               <input
@@ -58,9 +59,23 @@
                 class="input minus-input-value"
                 placeholder="Amount"
               />
-              <!-- Расходы дропдаун -->
-              <div class="button minus-categories-button red dropdown">
+              <!-- Доходы дропдаун -->
+              <div
+                class="expense-dropdown-label red"
+                id="select-categorie-expense"
+              >
                 Categorie
+              </div>
+              <div class="button minus-categories-button categories-dropdown">
+                <!-- Categorie -->
+                <ul class="categories-dropdown-list">
+                  <li class="categories-dropdown-item">
+                    <div class="add-new-categorie-form">
+                      <input type="text" class="new-categorie-input" />
+                      <div class="button red new-categorie-btn">Add new</div>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
             <input
@@ -68,9 +83,10 @@
               class="minus-input-name"
               placeholder="Description (optional)"
             />
-            <div class="button minus-button red">Add expnese</div>
+            <div class="button minus-button red">Add expense</div>
           </div>
         </div>
+        <!-- Test ///////////////////////////////////////////////////////-->
 
         <div class="right-sidebar">
           <!-- Правый сайдбар -->

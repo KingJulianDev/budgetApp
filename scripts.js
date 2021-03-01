@@ -7,19 +7,20 @@ const addExpense = document.querySelector('.minus-button')
 const historyList = document.querySelector('.history')
 const ul = document.querySelector('.ul') // не акткуально
 const addNewCategorie = document.querySelector('.new-categorie-btn')
-const incomeDropdownList = document.querySelector('.categories-dropdown-list')
+const incomeDropdownList = document.querySelector(
+  '.income-categories-dropdown-list'
+)
 const newCategorieInput = document.querySelector('.new-categorie-input')
-const selectCategorie = document.getElementById('select-categorie')
+const selectCategorie = document.getElementById('select-categorie-income')
 const incomeCategoriesLabel = document.querySelector('.income-dropdown-label')
 
 incomeCategoriesLabel.onclick = (target) => {
-  if (target.target.id === 'select-categorie') {
+  if (target.target.id === 'select-categorie-income') {
     if (isDropdownListVisible) {
-      document.querySelector('.categories-dropdown-list').style.display = 'none'
+      incomeDropdownList.style.display = 'none'
       isDropdownListVisible = !isDropdownListVisible
     } else {
-      document.querySelector('.categories-dropdown-list').style.display =
-        'block'
+      incomeDropdownList.style.display = 'block'
       isDropdownListVisible = !isDropdownListVisible
     }
   } else {
@@ -73,7 +74,8 @@ function onClickOnCategoriesItem(id) {
   selectCategorie.innerHTML = el */
 
   incomeCategoriesLabel.innerHTML = categoriesArr[id].name
-  document.querySelector('.categories-dropdown-list').style.display = 'none'
+  document.querySelector('.income-categories-dropdown-list').style.display =
+    'none'
   isDropdownListVisible = !isDropdownListVisible
 }
 
@@ -157,7 +159,7 @@ addIncome.onclick = () => {
   let historyItem = new CreateHistoryItem(
     idOfActivities,
     'income',
-    plusInputName.value,
+    incomeCategoriesLabel.innerHTML,
     Number(plusInputValue.value),
     'green'
   )
