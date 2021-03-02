@@ -5,7 +5,7 @@ const minusInputDescription = document.querySelector('.minus-input-description')
 const addIncome = document.querySelector('.plus-button')
 const addExpense = document.querySelector('.minus-button')
 const historyList = document.querySelector('.history')
-const ul = document.querySelector('.ul') // не акткуально
+const ul = document.querySelector('.history-list')
 const addNewIncomeCategorie = document.querySelector(
   '.income-new-categorie-btn'
 )
@@ -18,11 +18,27 @@ const incomeDropdownList = document.querySelector(
 const expenseDropdownList = document.querySelector(
   '.expense-categories-dropdown-list'
 )
-const newCategorieInput = document.querySelector('.new-categorie-input')
+const newIncomeCategorieInput = document.querySelector(
+  '.new-income-categorie-input'
+)
+const newExpenseCategorieInput = document.querySelector(
+  '.new-expense-categorie-input'
+)
 const selectCategorie = document.getElementById('select-categorie-income')
 const incomeCategoriesLabel = document.querySelector('.income-dropdown-label')
 const expenseCategoriesLabel = document.querySelector('.expense-dropdown-label')
 
+let isIncomeDropdownVisible = false
+let isExpenseDropdownVisible = false
+let historyArr = []
+let incomeCategoriesArr = []
+let expenseCategoriesArr = []
+let idOfActivities = 0
+let idOfIncomeCategorie = 0
+let idOfExpenseCategorie = 0
+
+/* ---------------ВЫПАДАЮЩИЕ СПИСКИ КАТЕГОРИЙ--------------- */
+/* ПОКАЗАТЬ/СКРЫТЬ ВЫПАДАЮЩИЙ СПИСОК ДОХОДОВ */
 incomeCategoriesLabel.onclick = (target) => {
   if (target.target.id === 'select-categorie-income') {
     if (isIncomeDropdownVisible) {
@@ -36,7 +52,7 @@ incomeCategoriesLabel.onclick = (target) => {
     return
   }
 }
-
+/* ПОКАЗАТЬ/СКРЫТЬ ВЫПАДАЮЩИЙ СПИСОК РАСХОДОВ */
 expenseCategoriesLabel.onclick = (target) => {
   if (target.target.id === 'select-categorie-expense') {
     if (isExpenseDropdownVisible) {
@@ -50,70 +66,52 @@ expenseCategoriesLabel.onclick = (target) => {
     return
   }
 }
-
+/* КНОПКА СОЗДАНИЯ НОВОЙ КАТЕГОРИИ ДОХОДОВ*/
 addNewIncomeCategorie.onclick = () => {
   incomeCategoriesArr.push({
     id: idOfIncomeCategorie,
-    name: newCategorieInput.value,
+    name: newIncomeCategorieInput.value,
   })
-  newCategorieInput.value = ''
-  createCategoriesItem(income)
+  newIncomeCategorieInput.value = ''
+  let arr = Array.from(incomeDropdownList.children)
+  createCategoriesItem(arr, incomeCategoriesArr, incomeDropdownList)
   idOfIncomeCategorie++
 }
-
+/* КНОПКА СОЗДАНИЯ НОВОЙ КАТЕГОРИИ РАСХОДОВ */
 addNewExpenseCategorie.onclick = () => {
   expenseCategoriesArr.push({
     id: idOfExpenseCategorie,
-    name: newCategorieInput.value,
+    name: newExpenseCategorieInput.value,
   })
-  newCategorieInput.value = ''
-  createCategoriesItem(expense)
+  newExpenseCategorieInput.value = ''
+  let arr = Array.from(expenseDropdownList.children)
+  createCategoriesItem(arr, expenseCategoriesArr, expenseDropdownList)
   idOfExpenseCategorie++
 }
-
-let isIncomeDropdownVisible = false
-let isExpenseDropdownVisible = false
-let currentBudget = 0
-let currentExpenses = 0
-let currentBalance = 0
-let historyArr = []
-let incomeCategoriesArr = []
-let expenseCategoriesArr = []
-let idOfActivities = 0
-let idOfIncomeCategorie = 0
-let idOfExpenseCategorie = 0
-///////////////////////
-let budget = 0
-let expenses = 0
-let balance = 0
-///////////////////////
-
-function createCategoriesItem(type) {
-  let arr = Array.from(incomeDropdownList.children)
+/* СОЗДАТЬ СПИСОК КАТЕГОРИЙ */
+function createCategoriesItem(arr, catarr, target, label) {
   let length = arr.length
   for (let y = 1; y < length; y++) {
     arr[y].remove()
   }
-  for (let i = 0; i < incomeCategoriesArr.length; i++) {
-    incomeDropdownList.insertAdjacentHTML(
+  for (let i = 0; i < catarr.length; i++) {
+    target.insertAdjacentHTML(
       'beforeend',
-      `<li class="categories-dropdown-item income-categorie-item" id="${incomeCategoriesArr[i].id}" onclick=onClickOnCategoriesItem(${incomeCategoriesArr[i].id})>${incomeCategoriesArr[i].name}</li>`
+      `<li class="categories-dropdown-item income-categorie-item" id="${catarr[i].id}" onclick=onClickOnCategoriesItem(${catarr[i].id})>${catarr[i].name}</li>`
     )
   }
 }
-
+/* ПРОВЕСИТЬ ОНКЛИКИ НА ЕЛЕМЕНТЫ СПИСКА КАТЕГОРИЙ */
 function onClickOnCategoriesItem(id) {
-  /* console.log(typeof el)
-  selectCategorie.innerHTML = el */
-
+  //incomeCategoriesLabel
   incomeCategoriesLabel.innerHTML = incomeCategoriesArr[id].name
   document.querySelector('.income-categories-dropdown-list').style.display =
     'none'
   isIncomeDropdownVisible = !isIncomeDropdownVisible
 }
-
+/* ---------------ИСТОРИЯ АКТИВНОСТИ--------------- */
 function createHistoryItem(el) {
-  ul.insertAdjacentHTML(
+  historyList.insertAdjacentHTML(
     'afterbegin',
     `<li class="${el.type} history-item" id="${el.id}">
       <div class="history-label ${el.color}">${el.categorie}</div>
@@ -125,10 +123,10 @@ function createHistoryItem(el) {
     </li>`
   )
 }
-
+/* ---------------ОТОБРАЖЕНИЕ ИНФОРМАЦИОННОЙ ПАНЕЛИ--------------- */
 function counting() {
-  budget = 0
-  expenses = 0
+  let budget = 0
+  let expenses = 0
 
   historyArr.forEach((el) => {
     if (el.type === 'income') {
@@ -141,7 +139,7 @@ function counting() {
   document.querySelector('.expenses').innerHTML = expenses
   document.querySelector('.balance').innerHTML = budget - expenses
 }
-
+/* ---------------КНОПКИ УДАЛЕНИЯ В ИСТОРИИ--------------- */
 function addOnclickOnDeleteBtns() {
   let deleteButtons = document.querySelectorAll('.delete-history-item')
   let historyItems = document.querySelectorAll('.history-item')
@@ -164,20 +162,7 @@ function addOnclickOnDeleteBtns() {
     }
   })
 }
-function addOnclickOnDropdownItems(id) {
-  console.log(id)
-}
-
-function renderHistoryItem() {
-  let ul = document.querySelector('.dropdown-list')
-  incomeCategoriesArr.forEach((el) => {
-    ul.insertAdjacentHTML(
-      'beforeend',
-      `<li class="dropdown-item" id="${el.id}" onclick="addOnclickOnDropdownItems(${el.id})">${el.name}</li>`
-    )
-  })
-}
-
+/* ---------------ДОБАВЛЕНИЕ ДОХОДА/РАСХОДА--------------- */
 class CreateHistoryItem {
   constructor(id, type, categorie, value, color, description) {
     this.id = id
@@ -198,14 +183,7 @@ addIncome.onclick = () => {
     'green',
     plusInputDescription.value
   )
-
-  historyArr.push(historyItem)
-  createHistoryItem(historyItem)
-  idOfActivities++
-  plusInputValue.value = ''
-  plusInputDescription.value = ''
-  addOnclickOnDeleteBtns()
-  counting()
+  addActivities(historyItem, plusInputValue, plusInputDescription)
 }
 
 addExpense.onclick = () => {
@@ -217,18 +195,21 @@ addExpense.onclick = () => {
     'red',
     minusInputDescription.value
   )
+  addActivities(historyItem, minusInputValue, minusInputDescription)
+}
 
-  historyArr.push(historyItem)
-  createHistoryItem(historyItem, 'red', 'expense')
+function addActivities(item, target, target2) {
+  target.value = ''
+  target2.value = ''
+  historyArr.push(item)
+  createHistoryItem(item)
   idOfActivities++
-  minusInputValue.value = ''
-  minusInputDescription.value = ''
   addOnclickOnDeleteBtns()
   counting()
 }
-/////////test//////////////////////////////////////////////////////
+/////////test////////////////////////////////////////////////////// 165-215
 
-const clear = document.querySelector('.clear-btn')
+/* const clear = document.querySelector('.clear-btn')
 clear.onclick = () => {
   renderHistoryItem()
 }
@@ -277,7 +258,7 @@ testingBtn.onclick = () => {
     createHistoryItem(otladka[i])
     historyArr.push(otladka[i])
   }
-}
+} */
 
 /* let budgetArr = [
   {
