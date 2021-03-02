@@ -171,11 +171,13 @@ input {
 .green:hover {
   background-color: green;
   color: white;
+  border-radius: 0 5px 5px 0;
 }
 
 .red:hover {
   background-color: red;
   color: white;
+  border-radius: 0 5px 5px 0;
 }
 
 .minus-button {
@@ -315,7 +317,8 @@ li > div {
   margin-left: 30%;
 }
 
-.income-categories-dropdown-list {
+.income-categories-dropdown-list,
+.expense-categories-dropdown-list {
   max-height: 12rem;
   overflow-y: scroll;
   box-sizing: border-box;

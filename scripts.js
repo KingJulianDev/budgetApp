@@ -1,7 +1,8 @@
 const plusInputValue = document.querySelector('.plus-input-value')
 const minusInputValue = document.querySelector('.minus-input-value')
-const plusInputName = document.querySelector('.plus-input-name')
-const minusInputName = document.querySelector('.minus-input-name')
+const plusInputDescription = document.querySelector('.plus-input-description')
+console.log(plusInputDescription)
+const minusInputDescription = document.querySelector('.minus-input-description')
 const addIncome = document.querySelector('.plus-button')
 const addExpense = document.querySelector('.minus-button')
 const historyList = document.querySelector('.history')
@@ -83,7 +84,7 @@ function createHistoryItem(el) {
   ul.insertAdjacentHTML(
     'afterbegin',
     `<li class="${el.type} history-item" id="${el.id}">
-      <div class="history-label ${el.color}">${el.name}</div>
+      <div class="history-label ${el.color}">${el.description}</div>
       <div class="history-value">$${el.value}</div>
       <div class="li-item-options">
           <div class="item-option delete-history-item" id="${el.id}">X</div>
@@ -146,12 +147,13 @@ function renderHistoryItem() {
 }
 
 class CreateHistoryItem {
-  constructor(id, type, name, value, color) {
+  constructor(id, type, categorie, value, color, description) {
     this.id = id
     this.type = type
-    this.name = name
+    this.categorie = categorie
     this.value = value
     this.color = color
+    this.description = description
   }
 }
 
@@ -161,36 +163,36 @@ addIncome.onclick = () => {
     'income',
     incomeCategoriesLabel.innerHTML,
     Number(plusInputValue.value),
-    'green'
+    'green',
+    plusInputDescription.value
   )
 
   historyArr.push(historyItem)
   createHistoryItem(historyItem)
   idOfActivities++
   plusInputValue.value = ''
-  plusInputName.value = ''
+  plusInputDescription.value = ''
   addOnclickOnDeleteBtns()
   counting()
-  console.log(Array.from(document.querySelectorAll('.history-item')))
 }
 
 addExpense.onclick = () => {
   let historyItem = new CreateHistoryItem(
     idOfActivities,
     'expense',
-    minusInputName.value,
+    minusInputDescription.value,
     Number(minusInputValue.value),
-    'red'
+    'red',
+    minusInputDescription.value
   )
 
   historyArr.push(historyItem)
   createHistoryItem(historyItem, 'red', 'expense')
   idOfActivities++
   minusInputValue.value = ''
-  minusInputName.value = ''
+  minusInputDescription.value = ''
   addOnclickOnDeleteBtns()
   counting()
-  console.log(Array.from(document.querySelectorAll('.history-item')))
 }
 /////////test//////////////////////////////////////////////////////
 
