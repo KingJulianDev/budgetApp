@@ -102,7 +102,7 @@ function createCategoriesItem(arr, catarr, target, label) {
   }
 }
 /* ПРОВЕСИТЬ ОНКЛИКИ НА ЕЛЕМЕНТЫ СПИСКА КАТЕГОРИЙ */
-function onClickOnCategoriesItem(id) {
+function onClickOnCategoriesItem(id, label) {
   //incomeCategoriesLabel
   incomeCategoriesLabel.innerHTML = incomeCategoriesArr[id].name
   document.querySelector('.income-categories-dropdown-list').style.display =
