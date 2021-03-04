@@ -80,7 +80,8 @@ addNewIncomeCategorie.onclick = () => {
     incomeCategoriesArr,
     incomeDropdownList,
     incomeCategoriesLabel,
-    'income'
+    'income',
+    'income-categorie-item'
   )
   idOfIncomeCategorie++
 }
@@ -97,12 +98,13 @@ addNewExpenseCategorie.onclick = () => {
     expenseCategoriesArr,
     expenseDropdownList,
     expenseCategoriesLabel,
-    'expense'
+    'expense',
+    'expense-categorie-item'
   )
   idOfExpenseCategorie++
 }
 /* СОЗДАТЬ СПИСОК КАТЕГОРИЙ */
-function createCategoriesItem(arr, catArr, target, label, state) {
+function createCategoriesItem(arr, catArr, target, label, state, type) {
   let length = arr.length
   for (let y = 1; y < length; y++) {
     arr[y].remove()
@@ -110,13 +112,50 @@ function createCategoriesItem(arr, catArr, target, label, state) {
   for (let i = 0; i < catArr.length; i++) {
     target.insertAdjacentHTML(
       'beforeend',
-      `<li class="categories-dropdown-item income-categorie-item" id="${catArr[i].id}">${catArr[i].name}</li>`
+      `<li class="categories-dropdown-item ${type}" id="${catArr[i].id}">${catArr[i].name}</li>`
     )
-    if (i === 0) {
+
+    if (state === 'income') {
+      let incomeCategoriesItems = document.querySelectorAll(
+        '.income-categorie-item'
+      )
+      incomeCategoriesItems.forEach((el) => {
+        el.onclick = () => {
+          let id = Array.from(incomeCategoriesItems).indexOf(el)
+          label.innerHTML = incomeCategoriesArr[id].name
+          if (state === 'income') {
+            incomeDropdownList.style.display = 'none'
+            isIncomeDropdownVisible = !isIncomeDropdownVisible
+          } else {
+            expenseDropdownList.style.display = 'none'
+            isExpenseDropdownVisible = !isExpenseDropdownVisible
+          }
+        }
+      })
+    } else {
+      let expenseCategoriesItems = document.querySelectorAll(
+        '.expense-categorie-item'
+      )
+      expenseCategoriesItems.forEach((el) => {
+        el.onclick = () => {
+          let id = Array.from(expenseCategoriesItems).indexOf(el)
+          label.innerHTML = expenseCategoriesArr[id].name
+          if (state === 'income') {
+            incomeDropdownList.style.display = 'none'
+            isIncomeDropdownVisible = !isIncomeDropdownVisible
+          } else {
+            expenseDropdownList.style.display = 'none'
+            isExpenseDropdownVisible = !isExpenseDropdownVisible
+          }
+        }
+      })
+    }
+
+    /* if (i === 0) {
       continue
     } else {
       target.children[i].onclick = () => {
-        label.innerHTML = catArr[i].name
+        label.innerHTML = catArr[i - 1].name
         if (state === 'income') {
           incomeDropdownList.style.display = 'none'
           isIncomeDropdownVisible = !isIncomeDropdownVisible
@@ -125,7 +164,7 @@ function createCategoriesItem(arr, catArr, target, label, state) {
           isExpenseDropdownVisible = !isExpenseDropdownVisible
         }
       }
-    }
+    } */
   }
 }
 /* ПРОВЕСИТЬ ОНКЛИКИ НА ЕЛЕМЕНТЫ СПИСКА КАТЕГОРИЙ */
@@ -213,7 +252,7 @@ addExpense.onclick = () => {
   let historyItem = new CreateHistoryItem(
     idOfActivities,
     'expense',
-    minusCategoriesLabel.innerHTML,
+    expenseCategoriesLabel.innerHTML,
     Number(minusInputValue.value),
     'red',
     minusInputDescription.value
