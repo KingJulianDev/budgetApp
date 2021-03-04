@@ -36,11 +36,11 @@ let expenseCategoriesArr = []
 let idOfActivities = 0
 let idOfIncomeCategorie = 0
 let idOfExpenseCategorie = 0
-
 /* ---------------ВЫПАДАЮЩИЕ СПИСКИ КАТЕГОРИЙ--------------- */
 /* ПОКАЗАТЬ/СКРЫТЬ ВЫПАДАЮЩИЙ СПИСОК ДОХОДОВ */
 incomeCategoriesLabel.onclick = (target) => {
   if (target.target.id === 'select-categorie-income') {
+    console.log(isIncomeDropdownVisible)
     if (isIncomeDropdownVisible) {
       incomeDropdownList.style.display = 'none'
       isIncomeDropdownVisible = !isIncomeDropdownVisible
@@ -48,6 +48,7 @@ incomeCategoriesLabel.onclick = (target) => {
       incomeDropdownList.style.display = 'block'
       isIncomeDropdownVisible = !isIncomeDropdownVisible
     }
+    console.log(isIncomeDropdownVisible)
   } else {
     return
   }
@@ -74,7 +75,13 @@ addNewIncomeCategorie.onclick = () => {
   })
   newIncomeCategorieInput.value = ''
   let arr = Array.from(incomeDropdownList.children)
-  createCategoriesItem(arr, incomeCategoriesArr, incomeDropdownList)
+  createCategoriesItem(
+    arr,
+    incomeCategoriesArr,
+    incomeDropdownList,
+    incomeCategoriesLabel,
+    'income'
+  )
   idOfIncomeCategorie++
 }
 /* КНОПКА СОЗДАНИЯ НОВОЙ КАТЕГОРИИ РАСХОДОВ */
@@ -85,29 +92,45 @@ addNewExpenseCategorie.onclick = () => {
   })
   newExpenseCategorieInput.value = ''
   let arr = Array.from(expenseDropdownList.children)
-  createCategoriesItem(arr, expenseCategoriesArr, expenseDropdownList)
+  createCategoriesItem(
+    arr,
+    expenseCategoriesArr,
+    expenseDropdownList,
+    expenseCategoriesLabel,
+    'expense'
+  )
   idOfExpenseCategorie++
 }
 /* СОЗДАТЬ СПИСОК КАТЕГОРИЙ */
-function createCategoriesItem(arr, catarr, target, label) {
+function createCategoriesItem(arr, catArr, target, label, state) {
   let length = arr.length
   for (let y = 1; y < length; y++) {
     arr[y].remove()
   }
-  for (let i = 0; i < catarr.length; i++) {
+  for (let i = 0; i < catArr.length; i++) {
     target.insertAdjacentHTML(
       'beforeend',
-      `<li class="categories-dropdown-item income-categorie-item" id="${catarr[i].id}" onclick=onClickOnCategoriesItem(${catarr[i].id})>${catarr[i].name}</li>`
+      `<li class="categories-dropdown-item income-categorie-item" id="${catArr[i].id}">${catArr[i].name}</li>`
     )
+    if (i === 0) {
+      continue
+    } else {
+      target.children[i].onclick = () => {
+        label.innerHTML = catArr[i].name
+        if (state === 'income') {
+          incomeDropdownList.style.display = 'none'
+          isIncomeDropdownVisible = !isIncomeDropdownVisible
+        } else {
+          expenseDropdownList.style.display = 'none'
+          isExpenseDropdownVisible = !isExpenseDropdownVisible
+        }
+      }
+    }
   }
 }
 /* ПРОВЕСИТЬ ОНКЛИКИ НА ЕЛЕМЕНТЫ СПИСКА КАТЕГОРИЙ */
-function onClickOnCategoriesItem(id, label) {
+function addOnClickOnCategoriesItems(label, type, state) {
   //incomeCategoriesLabel
-  incomeCategoriesLabel.innerHTML = incomeCategoriesArr[id].name
-  document.querySelector('.income-categories-dropdown-list').style.display =
-    'none'
-  isIncomeDropdownVisible = !isIncomeDropdownVisible
 }
 /* ---------------ИСТОРИЯ АКТИВНОСТИ--------------- */
 function createHistoryItem(el) {
