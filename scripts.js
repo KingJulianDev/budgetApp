@@ -27,6 +27,7 @@ const newExpenseCategorieInput = document.querySelector(
 const selectCategorie = document.getElementById('select-categorie-income')
 const incomeCategoriesLabel = document.querySelector('.income-dropdown-label')
 const expenseCategoriesLabel = document.querySelector('.expense-dropdown-label')
+const modal = document.querySelector('.modal')
 
 let isIncomeDropdownVisible = false
 let isExpenseDropdownVisible = false
@@ -40,7 +41,6 @@ let idOfExpenseCategorie = 0
 /* ПОКАЗАТЬ/СКРЫТЬ ВЫПАДАЮЩИЙ СПИСОК ДОХОДОВ */
 incomeCategoriesLabel.onclick = (target) => {
   if (target.target.id === 'select-categorie-income') {
-    console.log(isIncomeDropdownVisible)
     if (isIncomeDropdownVisible) {
       incomeDropdownList.style.display = 'none'
       isIncomeDropdownVisible = !isIncomeDropdownVisible
@@ -48,7 +48,6 @@ incomeCategoriesLabel.onclick = (target) => {
       incomeDropdownList.style.display = 'block'
       isIncomeDropdownVisible = !isIncomeDropdownVisible
     }
-    console.log(isIncomeDropdownVisible)
   } else {
     return
   }
@@ -189,8 +188,15 @@ function createHistoryItem(el) {
 function addOnclickOnInfoBtns() {
   let historyItemInfo = document.querySelectorAll('.info-history-item')
   historyItemInfo.forEach((el) => {
-    el.onclick = () => {
-      document.querySelector('.modal').style.display = 'block'
+    el.onclick = (target) => {
+      let id = +target.target.id
+      modal.style.display = 'block'
+      let modalText = document.querySelector('.modal-text')
+      /* let filtered = historyArr.filter((el) => el.id === id)
+      console.log(filtered) */
+      modalText.innerHTML = historyArr.filter(
+        (el) => el.id === id
+      )[0].description
     }
   })
 }
@@ -282,7 +288,7 @@ function addActivities(item, target, target2) {
 /////////test//////////////////////////////////////////////////////
 let closeModal = document.querySelector('.modal-close')
 closeModal.onclick = () => {
-  document.querySelector('.modal').style.display = 'none'
+  modal.style.display = 'none'
 }
 /* const clear = document.querySelector('.clear-btn')
 clear.onclick = () => {
