@@ -180,10 +180,19 @@ function createHistoryItem(el) {
       <div class="history-value">$${el.value}</div>
       <div class="li-item-options">
           <div class="item-option delete-history-item" id="${el.id}">X</div>
-          <div class="item-option edit-history-item" id="${el.id}">?</div>
+          <div class="item-option info-history-item" id="${el.id}">?</div>
       </div>
     </li>`
   )
+}
+
+function addOnclickOnInfoBtns() {
+  let historyItemInfo = document.querySelectorAll('.info-history-item')
+  historyItemInfo.forEach((el) => {
+    el.onclick = () => {
+      document.querySelector('.modal').style.display = 'block'
+    }
+  })
 }
 /* ---------------ОТОБРАЖЕНИЕ ИНФОРМАЦИОННОЙ ПАНЕЛИ--------------- */
 function counting() {
@@ -267,10 +276,14 @@ function addActivities(item, target, target2) {
   createHistoryItem(item)
   idOfActivities++
   addOnclickOnDeleteBtns()
+  addOnclickOnInfoBtns()
   counting()
 }
-/////////test////////////////////////////////////////////////////// 165-215
-
+/////////test//////////////////////////////////////////////////////
+let closeModal = document.querySelector('.modal-close')
+closeModal.onclick = () => {
+  document.querySelector('.modal').style.display = 'none'
+}
 /* const clear = document.querySelector('.clear-btn')
 clear.onclick = () => {
   renderHistoryItem()

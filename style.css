@@ -276,6 +276,7 @@ li > div {
   right: 5px;
   top: 5px;
   padding: 10px;
+  cursor: pointer;
 }
 /* ===== */
 .li-item-options {
@@ -306,7 +307,7 @@ li > div {
   align-items: center;
 }
 
-.edit-history-item {
+.info-history-item {
   background-color: darkred;
   color: white;
 }
