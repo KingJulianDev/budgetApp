@@ -171,6 +171,13 @@ function addOnClickOnCategoriesItems(label, type, state) {
   //incomeCategoriesLabel
 }
 /* ---------------ИСТОРИЯ АКТИВНОСТИ--------------- */
+function renderHistoryItem() {
+  historyList.innerHTML = ''
+  historyArr.forEach((el) => {
+    createHistoryItem(el)
+  })
+}
+
 function createHistoryItem(el) {
   historyList.insertAdjacentHTML(
     'afterbegin',
@@ -184,7 +191,7 @@ function createHistoryItem(el) {
     </li>`
   )
 }
-
+/* Добавляем онклики на кнопки инофрмации */
 function addOnclickOnInfoBtns() {
   let historyItemInfo = document.querySelectorAll('.info-history-item')
   historyItemInfo.forEach((el) => {
@@ -192,31 +199,13 @@ function addOnclickOnInfoBtns() {
       let id = +target.target.id
       modal.style.display = 'block'
       let modalText = document.querySelector('.modal-text')
-      /* let filtered = historyArr.filter((el) => el.id === id)
-      console.log(filtered) */
       modalText.innerHTML = historyArr.filter(
         (el) => el.id === id
       )[0].description
     }
   })
 }
-/* ---------------ОТОБРАЖЕНИЕ ИНФОРМАЦИОННОЙ ПАНЕЛИ--------------- */
-function counting() {
-  let budget = 0
-  let expenses = 0
-
-  historyArr.forEach((el) => {
-    if (el.type === 'income') {
-      budget += el.value
-    } else {
-      expenses += el.value
-    }
-  })
-  document.querySelector('.budget').innerHTML = budget
-  document.querySelector('.expenses').innerHTML = expenses
-  document.querySelector('.balance').innerHTML = budget - expenses
-}
-/* ---------------КНОПКИ УДАЛЕНИЯ В ИСТОРИИ--------------- */
+/* Добавляем онклики на кнопки удаления */
 function addOnclickOnDeleteBtns() {
   let deleteButtons = document.querySelectorAll('.delete-history-item')
   let historyItems = document.querySelectorAll('.history-item')
@@ -238,6 +227,22 @@ function addOnclickOnDeleteBtns() {
       counting()
     }
   })
+}
+/* ---------------ОТОБРАЖЕНИЕ ИНФОРМАЦИОННОЙ ПАНЕЛИ--------------- */
+function counting() {
+  let budget = 0
+  let expenses = 0
+
+  historyArr.forEach((el) => {
+    if (el.type === 'income') {
+      budget += el.value
+    } else {
+      expenses += el.value
+    }
+  })
+  document.querySelector('.budget').innerHTML = budget
+  document.querySelector('.expenses').innerHTML = expenses
+  document.querySelector('.balance').innerHTML = budget - expenses
 }
 /* ---------------ДОБАВЛЕНИЕ ДОХОДА/РАСХОДА--------------- */
 class CreateHistoryItem {
@@ -279,7 +284,8 @@ function addActivities(item, target, target2) {
   target.value = ''
   target2.value = ''
   historyArr.push(item)
-  createHistoryItem(item)
+  //createHistoryItem(item)
+  renderHistoryItem()
   idOfActivities++
   addOnclickOnDeleteBtns()
   addOnclickOnInfoBtns()
