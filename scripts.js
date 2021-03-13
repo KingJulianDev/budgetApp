@@ -199,9 +199,11 @@ function addOnclickOnInfoBtns() {
       let id = +target.target.id
       modal.style.display = 'block'
       let modalText = document.querySelector('.modal-text')
+      let modalDate = document.querySelector('.modal-date')
       modalText.innerHTML = historyArr.filter(
         (el) => el.id === id
       )[0].description
+      modalDate.innerHTML = historyArr.filter((el) => el.id === id)[0].date
     }
   })
 }
@@ -246,36 +248,49 @@ function counting() {
 }
 /* ---------------ДОБАВЛЕНИЕ ДОХОДА/РАСХОДА--------------- */
 class CreateHistoryItem {
-  constructor(id, type, categorie, value, color, description) {
+  constructor(id, type, categorie, value, color, description, date) {
     this.id = id
     this.type = type
     this.categorie = categorie
     this.value = value
     this.color = color
     this.description = description
+    this.date = date
   }
 }
 
 addIncome.onclick = () => {
+  let date = new Date().toLocaleString('en', {
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+  })
   let historyItem = new CreateHistoryItem(
     idOfActivities,
     'income',
     incomeCategoriesLabel.innerHTML,
     Number(plusInputValue.value),
     'green',
-    plusInputDescription.value
+    plusInputDescription.value,
+    date
   )
   addActivities(historyItem, plusInputValue, plusInputDescription)
 }
 
 addExpense.onclick = () => {
+  let date = new Date().toLocaleString('en', {
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+  })
   let historyItem = new CreateHistoryItem(
     idOfActivities,
     'expense',
     expenseCategoriesLabel.innerHTML,
     Number(minusInputValue.value),
     'red',
-    minusInputDescription.value
+    minusInputDescription.value,
+    date
   )
   addActivities(historyItem, minusInputValue, minusInputDescription)
 }
@@ -284,7 +299,6 @@ function addActivities(item, target, target2) {
   target.value = ''
   target2.value = ''
   historyArr.push(item)
-  //createHistoryItem(item)
   renderHistoryItem()
   idOfActivities++
   addOnclickOnDeleteBtns()
@@ -296,6 +310,49 @@ let closeModal = document.querySelector('.modal-close')
 closeModal.onclick = () => {
   modal.style.display = 'none'
 }
+///////////////////////////////////////////////////////////////
+/* const ru = new Date().toLocaleString('en', {
+  day: 'numeric',
+  month: 'numeric',
+  year: 'numeric',
+})
+
+const month = new Date().getMonth()
+const year = new Date().getFullYear()
+const day = new Date().getDay()
+console.log(ru)
+
+const testArr = []
+
+function keksik() {
+  a = '3/13/2021'
+  b = '5/11/2021'
+  c = '10/10/2021'
+  d = '1/1/2021'
+  testArr.push(b)
+  testArr.push(d)
+  testArr.push(a)
+  testArr.push(c)
+
+  for (let i = 0; i < 5; i++) {
+    testArr.push(
+      new Date().toLocaleString('en', {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+      })
+    )
+  }
+  console.log(testArr)
+}
+keksik()
+
+testArr.sort(function (a, b) {
+  return a - b
+})
+
+console.log(testArr) */
+//////////////////////////////////////////////////////////////////////////////////////////////
 /* const clear = document.querySelector('.clear-btn')
 clear.onclick = () => {
   renderHistoryItem()
