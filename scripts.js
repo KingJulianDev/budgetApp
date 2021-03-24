@@ -171,12 +171,12 @@ function addOnClickOnCategoriesItems(label, type, state) {
   //incomeCategoriesLabel
 }
 /* ---------------ИСТОРИЯ АКТИВНОСТИ--------------- */
-function renderHistoryItem() {
+/* function renderHistoryItem() {
   historyList.innerHTML = ''
   historyArr.forEach((el) => {
     createHistoryItem(el)
   })
-}
+} */
 
 function createHistoryItem(el) {
   historyList.insertAdjacentHTML(
@@ -246,6 +246,11 @@ function counting() {
   document.querySelector('.expenses').innerHTML = expenses
   document.querySelector('.balance').innerHTML = budget - expenses
 }
+function updateInfoScreen() {
+  addOnclickOnDeleteBtns()
+  addOnclickOnInfoBtns()
+  counting()
+}
 /* ---------------ДОБАВЛЕНИЕ ДОХОДА/РАСХОДА--------------- */
 class CreateHistoryItem {
   constructor(id, type, categorie, value, color, description, date) {
@@ -299,11 +304,15 @@ function addActivities(item, target, target2) {
   target.value = ''
   target2.value = ''
   historyArr.push(item)
-  renderHistoryItem()
+  historyList.innerHTML = ''
+  historyArr.forEach((el) => {
+    createHistoryItem(el)
+  })
   idOfActivities++
-  addOnclickOnDeleteBtns()
+  updateInfoScreen()
+  /* addOnclickOnDeleteBtns()
   addOnclickOnInfoBtns()
-  counting()
+  counting() */
 }
 let closeModal = document.querySelector('.modal-close')
 closeModal.onclick = () => {
@@ -362,54 +371,40 @@ let testarr = [
   },
 ]
 
-function compare(a, b) {
-  if (a > b) {
-    return 1
-  } else if (a === b) {
-    return 0
-  } else {
-    return -1
-  }
-}
-
 sortLessButton.onclick = () => {
-  let sorted = testarr.sort(function (a, b) {
+  let sorted = historyArr.sort(function (a, b) {
     return b.value - a.value
   })
+  historyList.innerHTML = ''
   sorted.forEach((el) => {
     createHistoryItem(el)
-    addOnclickOnDeleteBtns()
-    addOnclickOnInfoBtns()
+    updateInfoScreen()
   })
 }
 sortMoreButton.onclick = () => {
-  let sorted = testarr.sort(function (a, b) {
+  let sorted = historyArr.sort(function (a, b) {
     return a.value - b.value
   })
+  historyList.innerHTML = ''
   sorted.forEach((el) => {
     createHistoryItem(el)
-    addOnclickOnDeleteBtns()
-    addOnclickOnInfoBtns()
+    updateInfoScreen()
   })
 }
 sortOldButton.onclick = () => {
-  let sorted = testarr.sort()
-  console.log(sorted)
+  let sorted = historyArr.sort()
+  historyList.innerHTML = ''
   sorted.forEach((el) => {
     createHistoryItem(el)
-    addOnclickOnDeleteBtns()
-    addOnclickOnInfoBtns()
-    console.log(sorted)
+    updateInfoScreen()
   })
 }
 sortNewButton.onclick = () => {
-  let sorted = testarr.sort().reverse()
-  console.log(sorted)
+  let sorted = historyArr.sort().reverse()
+  historyList.innerHTML = ''
   sorted.forEach((el) => {
     createHistoryItem(el)
-    addOnclickOnDeleteBtns()
-    addOnclickOnInfoBtns()
-    console.log(sorted)
+    updateInfoScreen()
   })
 }
 /* let testarr2 = [
