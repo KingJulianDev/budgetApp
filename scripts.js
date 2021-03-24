@@ -32,6 +32,15 @@ const modal = document.querySelector('.modal')
 let isIncomeDropdownVisible = false
 let isExpenseDropdownVisible = false
 let historyArr = []
+if (localStorage.budget) {
+  if (localStorage.budget.length > 0) {
+    historyArr = JSON.parse(localStorage.getItem('budget'))
+    historyArr.forEach((el) => {
+      createHistoryItem(el)
+      updateInfoScreen()
+    })
+  }
+}
 let incomeCategoriesArr = []
 let expenseCategoriesArr = []
 let idOfActivities = 0
@@ -227,9 +236,11 @@ function addOnclickOnDeleteBtns() {
         }
       }
       counting()
+      localStorage.setItem('budget', JSON.stringify(historyArr))
     }
   })
 }
+//localStorage.removeItem('budget')
 /* ---------------ОТОБРАЖЕНИЕ ИНФОРМАЦИОННОЙ ПАНЕЛИ--------------- */
 function counting() {
   let budget = 0
@@ -313,6 +324,7 @@ function addActivities(item, target, target2) {
   /* addOnclickOnDeleteBtns()
   addOnclickOnInfoBtns()
   counting() */
+  localStorage.setItem('budget', JSON.stringify(historyArr))
 }
 let closeModal = document.querySelector('.modal-close')
 closeModal.onclick = () => {
