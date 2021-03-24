@@ -4,7 +4,7 @@ const plusInputDescription = document.querySelector('.plus-input-description')
 const minusInputDescription = document.querySelector('.minus-input-description')
 const addIncome = document.querySelector('.plus-button')
 const addExpense = document.querySelector('.minus-button')
-const historyList = document.querySelector('.history')
+const historyList = document.querySelector('.history-list')
 const ul = document.querySelector('.history-list')
 const addNewIncomeCategorie = document.querySelector(
   '.income-new-categorie-btn'
@@ -305,11 +305,176 @@ function addActivities(item, target, target2) {
   addOnclickOnInfoBtns()
   counting()
 }
-/////////test//////////////////////////////////////////////////////
 let closeModal = document.querySelector('.modal-close')
 closeModal.onclick = () => {
   modal.style.display = 'none'
 }
+/////////test//////////////////////////////////////////////////////
+let sortNewButton = document.querySelector('.sort-new')
+let sortOldButton = document.querySelector('.sort-old')
+let sortMoreButton = document.querySelector('.sort-more')
+let sortLessButton = document.querySelector('.sort-less')
+let testarr = [
+  {
+    categorie: '08/24/2021',
+    color: 'green',
+    date: '08/24/2021',
+    description: 'first wage',
+    id: 0,
+    type: 'income',
+    value: 1000,
+  },
+  {
+    categorie: '03/23/2021',
+    color: 'green',
+    date: '03/23/2021',
+    description: 'first wage',
+    id: 1,
+    type: 'income',
+    value: 800,
+  },
+  {
+    categorie: '02/01/2021',
+    color: 'green',
+    date: '02/01/2021',
+    description: 'first wage',
+    id: 2,
+    type: 'income',
+    value: 50,
+  },
+  {
+    categorie: '01/30/2021',
+    color: 'green',
+    date: '01/30/2021',
+    description: 'first wage',
+    id: 3,
+    type: 'income',
+    value: 200,
+  },
+  {
+    categorie: '10/11/2021',
+    color: 'green',
+    date: '10/11/2021',
+    description: 'first wage',
+    id: 4,
+    type: 'income',
+    value: 700,
+  },
+]
+
+function compare(a, b) {
+  if (a > b) {
+    return 1
+  } else if (a === b) {
+    return 0
+  } else {
+    return -1
+  }
+}
+
+sortLessButton.onclick = () => {
+  let sorted = testarr.sort(function (a, b) {
+    return b.value - a.value
+  })
+  sorted.forEach((el) => {
+    createHistoryItem(el)
+    addOnclickOnDeleteBtns()
+    addOnclickOnInfoBtns()
+  })
+}
+sortMoreButton.onclick = () => {
+  let sorted = testarr.sort(function (a, b) {
+    return a.value - b.value
+  })
+  sorted.forEach((el) => {
+    createHistoryItem(el)
+    addOnclickOnDeleteBtns()
+    addOnclickOnInfoBtns()
+  })
+}
+sortOldButton.onclick = () => {
+  let sorted = testarr.sort()
+  console.log(sorted)
+  sorted.forEach((el) => {
+    createHistoryItem(el)
+    addOnclickOnDeleteBtns()
+    addOnclickOnInfoBtns()
+    console.log(sorted)
+  })
+}
+sortNewButton.onclick = () => {
+  let sorted = testarr.sort().reverse()
+  console.log(sorted)
+  sorted.forEach((el) => {
+    createHistoryItem(el)
+    addOnclickOnDeleteBtns()
+    addOnclickOnInfoBtns()
+    console.log(sorted)
+  })
+}
+/* let testarr2 = [
+  { day: 1, month: 1, year: 2020 },
+  { day: 2, month: 1, year: 2021 },
+  { day: 2, month: 1, year: 2019 },
+  { day: 1, month: 2, year: 2020 },
+  { day: 2, month: 2, year: 2021 },
+  { day: 1, month: 2, year: 2019 },
+  { day: 1, month: 3, year: 2020 },
+  { day: 2, month: 3, year: 2021 },
+  { day: 3, month: 3, year: 2019 },
+] */
+/* ФУНКЦИЯ СРАВНИВАНИЯ ВРЕМЕНИ
+function getTime(item) {
+  return new Date(item.year, item.month, item.day).getTime()
+}
+
+let test = testarr2.sort((a, b) => getTime(a) - getTime(b))
+console.log(test) */
+///////////////////////////
+/* function sortDates() {
+  let a = testarr2.sort(function (a, b) {
+    return a.year - b.year
+  })
+  let b = a.sort(function (a, b) {
+    return a.month - b.month
+  })
+  let c = b.sort(function (a, b) {
+    return a.day - b.day
+  })
+  console.log(c)
+}
+sortDates() */
+/////////////////////////////
+/* let testing = testarr2.sort(function (a, b) {
+  //самые новые вверху
+  return a.year - b.year
+})
+let testingsecond = testing.sort(function (a, b) {
+  //самые старые вверху
+  return a.month - b.month
+})
+let testing2 = testarr2.sort(function (a, b) {
+  return b.year - a.year
+})
+console.log(testing)
+console.log(testingsecond)
+console.log(testing2) */
+/* 
+let a = '03/23/2021'
+let b = '10/23/2021'
+let testarr = [
+  '04/01/2021',
+  '01/30/2021',
+  '03/20/2021',
+  '05/15/2021',
+  '02/14/2021',
+  '04/02/2021',
+  '01/29/2021',
+  '03/19/2021',
+  '05/16/2021',
+  '02/15/2021',
+]
+console.log(testarr.sort().reverse()) */
 ///////////////////////////////////////////////////////////////
 /* const ru = new Date().toLocaleString('en', {
   day: 'numeric',
