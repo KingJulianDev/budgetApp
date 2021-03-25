@@ -71,14 +71,6 @@ if (localStorage.expenseCategories) {
     'expense-categorie-item'
   )
 }
-if (localStorage.idOfIncomeCategorie) {
-  idOfIncomeCategorie = JSON.parse(localStorage.getItem('idOfIncomeCategorie'))
-}
-if (localStorage.idOfExpenseCategorie) {
-  idOfExpenseCategorie = JSON.parse(
-    localStorage.getItem('idOfExpenseCategorie')
-  )
-}
 /* ---------------ВЫПАДАЮЩИЕ СПИСКИ КАТЕГОРИЙ--------------- */
 /* ПОКАЗАТЬ/СКРЫТЬ ВЫПАДАЮЩИЙ СПИСОК ДОХОДОВ */
 incomeCategoriesLabel.onclick = (target) => {
@@ -111,16 +103,11 @@ expenseCategoriesLabel.onclick = (target) => {
 /* КНОПКА СОЗДАНИЯ НОВОЙ КАТЕГОРИИ ДОХОДОВ*/
 addNewIncomeCategorie.onclick = () => {
   incomeCategoriesArr.push({
-    id: idOfIncomeCategorie,
+    id: incomeCategoriesArr.length,
     name: newIncomeCategorieInput.value,
   })
-  idOfIncomeCategorie++
   /* ----------------- */
   localStorage.setItem('incomeCategories', JSON.stringify(incomeCategoriesArr))
-  localStorage.setItem(
-    'idOfIncomeCategorie',
-    JSON.stringify(idOfIncomeCategorie)
-  )
   /* ----------------- */
   newIncomeCategorieInput.value = ''
   let arr = Array.from(incomeDropdownList.children)
@@ -136,18 +123,13 @@ addNewIncomeCategorie.onclick = () => {
 /* КНОПКА СОЗДАНИЯ НОВОЙ КАТЕГОРИИ РАСХОДОВ */
 addNewExpenseCategorie.onclick = () => {
   expenseCategoriesArr.push({
-    id: idOfExpenseCategorie,
+    id: expenseCategoriesArr.length,
     name: newExpenseCategorieInput.value,
   })
-  idOfExpenseCategorie++
   /* ----------------- */
   localStorage.setItem(
     'expenseCategories',
     JSON.stringify(expenseCategoriesArr)
-  )
-  localStorage.setItem(
-    'idOfExpenseCategorie',
-    JSON.stringify(idOfExpenseCategorie)
   )
   /* ----------------- */
   newExpenseCategorieInput.value = ''
