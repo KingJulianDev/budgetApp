@@ -380,7 +380,7 @@ li > div {
 
 .income-categories-dropdown-list,
 .expense-categories-dropdown-list {
-  max-height: 12rem;
+  max-height: 10rem;
   overflow-y: scroll;
   box-sizing: border-box;
   position: absolute;
@@ -459,4 +459,8 @@ li > div {
 }
 .history-filter-label:hover {
   background-color: lightseagreen;
+}
+.history-filter-label-active {
+  background-color: #20b2aa;
+  outline: 3px solid #074a64;
 }

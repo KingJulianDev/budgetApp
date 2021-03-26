@@ -197,13 +197,6 @@ function addOnClickOnCategoriesItems(label, type, state) {
   //incomeCategoriesLabel
 }
 /* ---------------ИСТОРИЯ АКТИВНОСТИ--------------- */
-/* function renderHistoryItem() {
-  historyList.innerHTML = ''
-  historyArr.forEach((el) => {
-    createHistoryItem(el)
-  })
-} */
-
 function createHistoryItem(el) {
   historyList.insertAdjacentHTML(
     'afterbegin',
@@ -337,9 +330,6 @@ function addActivities(item, target, target2) {
   })
   idOfActivities++
   updateInfoScreen()
-  /* addOnclickOnDeleteBtns()
-  addOnclickOnInfoBtns()
-  counting() */
   localStorage.setItem('budget', JSON.stringify(historyArr))
 }
 let closeModal = document.querySelector('.modal-close')
@@ -399,6 +389,18 @@ let testarr = [
   },
 ]
 
+/* --------------- */
+let activeSortFilter = sortNewButton
+function whichFilterIsActive(el) {
+  let filterLabels = document.querySelectorAll('.history-filter-label')
+  filterLabels.forEach((el) => {
+    if (Array.from(el.classList).includes('history-filter-label-active')) {
+      el.classList.remove('history-filter-label-active')
+    }
+  })
+  el.classList.add('history-filter-label-active')
+}
+/* --------------- */
 sortLessButton.onclick = () => {
   let sorted = historyArr.sort(function (a, b) {
     return b.value - a.value
@@ -408,6 +410,7 @@ sortLessButton.onclick = () => {
     createHistoryItem(el)
     updateInfoScreen()
   })
+  whichFilterIsActive(sortLessButton)
 }
 sortMoreButton.onclick = () => {
   let sorted = historyArr.sort(function (a, b) {
@@ -418,6 +421,7 @@ sortMoreButton.onclick = () => {
     createHistoryItem(el)
     updateInfoScreen()
   })
+  whichFilterIsActive(sortMoreButton)
 }
 sortOldButton.onclick = () => {
   let sorted = historyArr.sort()
@@ -426,6 +430,7 @@ sortOldButton.onclick = () => {
     createHistoryItem(el)
     updateInfoScreen()
   })
+  whichFilterIsActive(sortOldButton)
 }
 sortNewButton.onclick = () => {
   let sorted = historyArr.sort().reverse()
@@ -434,6 +439,7 @@ sortNewButton.onclick = () => {
     createHistoryItem(el)
     updateInfoScreen()
   })
+  whichFilterIsActive(sortNewButton)
 }
 /* let testarr2 = [
   { day: 1, month: 1, year: 2020 },
