@@ -31,7 +31,6 @@ const modal = document.querySelector('.modal')
 
 let isIncomeDropdownVisible = false
 let isExpenseDropdownVisible = false
-let idOfActivities = 0
 let idOfIncomeCategorie = 0
 let idOfExpenseCategorie = 0
 /* ---------------LOCAL STORAGE --------------- */
@@ -291,7 +290,7 @@ addIncome.onclick = () => {
     year: 'numeric',
   })
   let historyItem = new CreateHistoryItem(
-    idOfActivities,
+    historyArr.length,
     'income',
     incomeCategoriesLabel.innerHTML,
     Number(plusInputValue.value),
@@ -300,6 +299,9 @@ addIncome.onclick = () => {
     date
   )
   addActivities(historyItem, plusInputValue, plusInputDescription)
+  /* ---------- */
+  activeSortFilter === 'sort-less' ? sortLess() : sortMore()
+  /* ---------- */
 }
 
 addExpense.onclick = () => {
@@ -309,7 +311,7 @@ addExpense.onclick = () => {
     year: 'numeric',
   })
   let historyItem = new CreateHistoryItem(
-    idOfActivities,
+    historyArr.length,
     'expense',
     expenseCategoriesLabel.innerHTML,
     Number(minusInputValue.value),
@@ -328,7 +330,6 @@ function addActivities(item, target, target2) {
   historyArr.forEach((el) => {
     createHistoryItem(el)
   })
-  idOfActivities++
   updateInfoScreen()
   localStorage.setItem('budget', JSON.stringify(historyArr))
 }
@@ -390,7 +391,7 @@ let testarr = [
 ]
 
 /* --------------- */
-let activeSortFilter = sortNewButton
+let activeSortFilter = 'sort-new'
 function whichFilterIsActive(el) {
   let filterLabels = document.querySelectorAll('.history-filter-label')
   filterLabels.forEach((el) => {
@@ -401,7 +402,7 @@ function whichFilterIsActive(el) {
   el.classList.add('history-filter-label-active')
 }
 /* --------------- */
-sortLessButton.onclick = () => {
+function sortLess() {
   let sorted = historyArr.sort(function (a, b) {
     return b.value - a.value
   })
@@ -412,7 +413,7 @@ sortLessButton.onclick = () => {
   })
   whichFilterIsActive(sortLessButton)
 }
-sortMoreButton.onclick = () => {
+function sortMore() {
   let sorted = historyArr.sort(function (a, b) {
     return a.value - b.value
   })
@@ -423,7 +424,7 @@ sortMoreButton.onclick = () => {
   })
   whichFilterIsActive(sortMoreButton)
 }
-sortOldButton.onclick = () => {
+function sortOld() {
   let sorted = historyArr.sort()
   historyList.innerHTML = ''
   sorted.forEach((el) => {
@@ -432,7 +433,7 @@ sortOldButton.onclick = () => {
   })
   whichFilterIsActive(sortOldButton)
 }
-sortNewButton.onclick = () => {
+function sortNew() {
   let sorted = historyArr.sort().reverse()
   historyList.innerHTML = ''
   sorted.forEach((el) => {
@@ -441,6 +442,125 @@ sortNewButton.onclick = () => {
   })
   whichFilterIsActive(sortNewButton)
 }
+/* --------------- */
+sortLessButton.onclick = (target) => {
+  sortLess()
+  activeSortFilter = target.target.id
+}
+sortMoreButton.onclick = (target) => {
+  sortMore()
+  activeSortFilter = target.target.id
+}
+sortOldButton.onclick = (target) => {
+  sortOld()
+  activeSortFilter = target.target.id
+}
+sortNewButton.onclick = (target) => {
+  sortNew()
+  activeSortFilter = target.target.id
+}
+/* --------------- */
+let somearr = [
+  {
+    id: 0,
+    type: 'income',
+    categorie: 'test',
+    value: 0,
+    color: 'green',
+    description: '0',
+    date: '3/27/2021',
+  },
+  {
+    id: 1,
+    type: 'income',
+    categorie: 'test',
+    value: 1,
+    color: 'green',
+    description: '1',
+    date: '3/27/2021',
+  },
+  {
+    id: 2,
+    type: 'income',
+    categorie: 'test',
+    value: 2,
+    color: 'green',
+    description: '2',
+    date: '3/27/2021',
+  },
+  {
+    id: 3,
+    type: 'income',
+    categorie: 'test',
+    value: 3,
+    color: 'green',
+    description: '3',
+    date: '3/27/2021',
+  },
+  {
+    id: 4,
+    type: 'income',
+    categorie: 'test',
+    value: 4,
+    color: 'green',
+    description: '4',
+    date: '3/27/2021',
+  },
+  {
+    id: 5,
+    type: 'income',
+    categorie: 'test',
+    value: 5,
+    color: 'green',
+    description: '5',
+    date: '3/27/2021',
+  },
+  {
+    id: 6,
+    type: 'income',
+    categorie: 'test',
+    value: 6,
+    color: 'green',
+    description: '6',
+    date: '3/27/2021',
+  },
+  {
+    id: 7,
+    type: 'income',
+    categorie: 'test',
+    value: 7,
+    color: 'green',
+    description: '7',
+    date: '3/27/2021',
+  },
+  {
+    id: 8,
+    type: 'income',
+    categorie: 'test',
+    value: 8,
+    color: 'green',
+    description: '8',
+    date: '3/27/2021',
+  },
+]
+let otladka = document.querySelector('.otladka')
+otladka.onclick = () => {
+  somearr.forEach((el) => {
+    let historyItem = new CreateHistoryItem(
+      el.id,
+      el.type,
+      el.categorie,
+      el.value,
+      el.color,
+      el.description,
+      el.date
+    )
+    historyArr.push(historyItem)
+    createHistoryItem(el)
+    updateInfoScreen()
+  })
+}
+/* --------------- */
 /* let testarr2 = [
   { day: 1, month: 1, year: 2020 },
   { day: 2, month: 1, year: 2021 },
