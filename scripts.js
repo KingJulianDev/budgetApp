@@ -221,7 +221,9 @@ function addOnclickOnInfoBtns() {
       modalText.innerHTML = historyArr.filter(
         (el) => el.id === id
       )[0].description
-      modalDate.innerHTML = historyArr.filter((el) => el.id === id)[0].date
+      let item = historyArr.filter((el) => el.id === id)[0]
+      let fullDate = `${item.month}/${item.day}/${item.year}`
+      modalDate.innerHTML = fullDate
     }
   })
 }
@@ -272,21 +274,42 @@ function updateInfoScreen() {
 }
 /* ---------------ДОБАВЛЕНИЕ ДОХОДА/РАСХОДА--------------- */
 class CreateHistoryItem {
-  constructor(id, type, categorie, value, color, description, date) {
+  constructor(
+    id,
+    type,
+    categorie,
+    value,
+    color,
+    description,
+    day,
+    month,
+    year
+  ) {
     this.id = id
     this.type = type
     this.categorie = categorie
     this.value = value
     this.color = color
     this.description = description
-    this.date = date
+    this.day = day
+    this.month = month
+    this.year = year
   }
 }
 
 addIncome.onclick = () => {
-  let date = new Date().toLocaleString('en', {
+  /* let date = new Date().toLocaleString('en', {
     day: 'numeric',
     month: 'numeric',
+    year: 'numeric',
+  }) */
+  let day = new Date().toLocaleString('en', {
+    day: 'numeric',
+  })
+  let month = new Date().toLocaleString('en', {
+    month: 'numeric',
+  })
+  let year = new Date().toLocaleString('en', {
     year: 'numeric',
   })
   let historyItem = new CreateHistoryItem(
@@ -296,18 +319,35 @@ addIncome.onclick = () => {
     Number(plusInputValue.value),
     'green',
     plusInputDescription.value,
-    date
+    day,
+    month,
+    year
   )
   addActivities(historyItem, plusInputValue, plusInputDescription)
   /* ---------- */
-  activeSortFilter === 'sort-less' ? sortLess() : sortMore()
+  activeSortFilter === 'sort-less'
+    ? sortLess()
+    : activeSortFilter === 'sort-more'
+    ? sortMore()
+    : activeSortFilter === 'sort-new'
+    ? sortNew()
+    : sortOld()
   /* ---------- */
 }
 
 addExpense.onclick = () => {
-  let date = new Date().toLocaleString('en', {
+  /* let date = new Date().toLocaleString('en', {
     day: 'numeric',
     month: 'numeric',
+    year: 'numeric',
+  }) */
+  let day = new Date().toLocaleString('en', {
+    day: 'numeric',
+  })
+  let month = new Date().toLocaleString('en', {
+    month: 'numeric',
+  })
+  let year = new Date().toLocaleString('en', {
     year: 'numeric',
   })
   let historyItem = new CreateHistoryItem(
@@ -317,9 +357,18 @@ addExpense.onclick = () => {
     Number(minusInputValue.value),
     'red',
     minusInputDescription.value,
-    date
+    day,
+    month,
+    year
   )
   addActivities(historyItem, minusInputValue, minusInputDescription)
+  activeSortFilter === 'sort-less'
+    ? sortLess()
+    : activeSortFilter === 'sort-more'
+    ? sortMore()
+    : activeSortFilter === 'sort-new'
+    ? sortNew()
+    : sortOld()
 }
 
 function addActivities(item, target, target2) {
@@ -392,6 +441,7 @@ let testarr = [
 
 /* --------------- */
 let activeSortFilter = 'sort-new'
+
 function whichFilterIsActive(el) {
   let filterLabels = document.querySelectorAll('.history-filter-label')
   filterLabels.forEach((el) => {
@@ -402,6 +452,9 @@ function whichFilterIsActive(el) {
   el.classList.add('history-filter-label-active')
 }
 /* --------------- */
+function getTime(item) {
+  return new Date(item.year, item.month, item.day).getTime()
+}
 function sortLess() {
   let sorted = historyArr.sort(function (a, b) {
     return b.value - a.value
@@ -425,7 +478,7 @@ function sortMore() {
   whichFilterIsActive(sortMoreButton)
 }
 function sortOld() {
-  let sorted = historyArr.sort()
+  let sorted = historyArr.sort((a, b) => getTime(b) - getTime(a))
   historyList.innerHTML = ''
   sorted.forEach((el) => {
     createHistoryItem(el)
@@ -434,7 +487,7 @@ function sortOld() {
   whichFilterIsActive(sortOldButton)
 }
 function sortNew() {
-  let sorted = historyArr.sort().reverse()
+  let sorted = historyArr.sort((a, b) => getTime(a) - getTime(b))
   historyList.innerHTML = ''
   sorted.forEach((el) => {
     createHistoryItem(el)
@@ -572,6 +625,8 @@ otladka.onclick = () => {
   { day: 2, month: 3, year: 2021 },
   { day: 3, month: 3, year: 2019 },
 ] */
+/* --------------- */
+
 /* ФУНКЦИЯ СРАВНИВАНИЯ ВРЕМЕНИ
 function getTime(item) {
   return new Date(item.year, item.month, item.day).getTime()
