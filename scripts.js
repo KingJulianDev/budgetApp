@@ -49,26 +49,24 @@ if (localStorage.budgetAppData) {
     createHistoryItem(el)
     updateInfoScreen()
   })
-}
 
-if (localStorage.budgetAppData) {
+  idOfActivities = JSON.parse(localStorage.getItem('budgetAppData'))[0]
+
   incomeCategoriesArr = JSON.parse(localStorage.getItem('budgetAppData'))[2]
-  let arr = Array.from(incomeDropdownList.children)
+  let incomeArr = Array.from(incomeDropdownList.children)
   createCategoriesItem(
-    arr,
+    incomeArr,
     incomeCategoriesArr,
     incomeDropdownList,
     incomeCategoriesLabel,
     'income',
     'income-categorie-item'
   )
-}
 
-if (localStorage.budgetAppData) {
   expenseCategoriesArr = JSON.parse(localStorage.getItem('budgetAppData'))[3]
-  let arr = Array.from(expenseDropdownList.children)
+  let expenseArr = Array.from(expenseDropdownList.children)
   createCategoriesItem(
-    arr,
+    expenseArr,
     expenseCategoriesArr,
     expenseDropdownList,
     expenseCategoriesLabel,
@@ -76,6 +74,7 @@ if (localStorage.budgetAppData) {
     'expense-categorie-item'
   )
 }
+
 function saveDataInLocalStorage() {
   let data = [
     idOfActivities,
