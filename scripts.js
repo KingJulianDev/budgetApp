@@ -33,20 +33,26 @@ let isIncomeDropdownVisible = false
 let isExpenseDropdownVisible = false
 let idOfIncomeCategorie = 0
 let idOfExpenseCategorie = 0
-/* ---------------LOCAL STORAGE --------------- */
+let idOfActivities
 let historyArr = []
-if (localStorage.budget) {
-  if (localStorage.budget.length > 0) {
-    historyArr = JSON.parse(localStorage.getItem('budget'))
-    historyArr.forEach((el) => {
-      createHistoryItem(el)
-      updateInfoScreen()
-    })
-  }
-}
 let incomeCategoriesArr = []
-if (localStorage.incomeCategories) {
-  incomeCategoriesArr = JSON.parse(localStorage.getItem('incomeCategories'))
+let expenseCategoriesArr = []
+/* ---------------LOCAL STORAGE --------------- */
+if (!localStorage.budgetAppData) {
+  idOfActivities = 0
+  saveDataInLocalStorage()
+}
+
+if (localStorage.budgetAppData) {
+  historyArr = JSON.parse(localStorage.getItem('budgetAppData'))[1]
+  historyArr.forEach((el) => {
+    createHistoryItem(el)
+    updateInfoScreen()
+  })
+}
+
+if (localStorage.budgetAppData) {
+  incomeCategoriesArr = JSON.parse(localStorage.getItem('budgetAppData'))[2]
   let arr = Array.from(incomeDropdownList.children)
   createCategoriesItem(
     arr,
@@ -57,9 +63,9 @@ if (localStorage.incomeCategories) {
     'income-categorie-item'
   )
 }
-let expenseCategoriesArr = []
-if (localStorage.expenseCategories) {
-  expenseCategoriesArr = JSON.parse(localStorage.getItem('expenseCategories'))
+
+if (localStorage.budgetAppData) {
+  expenseCategoriesArr = JSON.parse(localStorage.getItem('budgetAppData'))[3]
   let arr = Array.from(expenseDropdownList.children)
   createCategoriesItem(
     arr,
@@ -69,6 +75,15 @@ if (localStorage.expenseCategories) {
     'expense',
     'expense-categorie-item'
   )
+}
+function saveDataInLocalStorage() {
+  let data = [
+    idOfActivities,
+    historyArr,
+    incomeCategoriesArr,
+    expenseCategoriesArr,
+  ]
+  localStorage.setItem('budgetAppData', JSON.stringify(data))
 }
 /* ---------------ВЫПАДАЮЩИЕ СПИСКИ КАТЕГОРИЙ--------------- */
 /* ПОКАЗАТЬ/СКРЫТЬ ВЫПАДАЮЩИЙ СПИСОК ДОХОДОВ */
@@ -105,9 +120,6 @@ addNewIncomeCategorie.onclick = () => {
     id: incomeCategoriesArr.length,
     name: newIncomeCategorieInput.value,
   })
-  /* ----------------- */
-  localStorage.setItem('incomeCategories', JSON.stringify(incomeCategoriesArr))
-  /* ----------------- */
   newIncomeCategorieInput.value = ''
   let arr = Array.from(incomeDropdownList.children)
   createCategoriesItem(
@@ -125,12 +137,6 @@ addNewExpenseCategorie.onclick = () => {
     id: expenseCategoriesArr.length,
     name: newExpenseCategorieInput.value,
   })
-  /* ----------------- */
-  localStorage.setItem(
-    'expenseCategories',
-    JSON.stringify(expenseCategoriesArr)
-  )
-  /* ----------------- */
   newExpenseCategorieInput.value = ''
   let arr = Array.from(expenseDropdownList.children)
   createCategoriesItem(
@@ -247,7 +253,7 @@ function addOnclickOnDeleteBtns() {
         }
       }
       counting()
-      localStorage.setItem('budget', JSON.stringify(historyArr))
+      saveDataInLocalStorage()
     }
   })
 }
@@ -296,13 +302,7 @@ class CreateHistoryItem {
     this.year = year
   }
 }
-
-addIncome.onclick = () => {
-  /* let date = new Date().toLocaleString('en', {
-    day: 'numeric',
-    month: 'numeric',
-    year: 'numeric',
-  }) */
+function getDate() {
   let day = new Date().toLocaleString('en', {
     day: 'numeric',
   })
@@ -312,8 +312,23 @@ addIncome.onclick = () => {
   let year = new Date().toLocaleString('en', {
     year: 'numeric',
   })
+  return { day, month, year }
+}
+
+function checkFilter() {
+  activeSortFilter === 'sort-less'
+    ? sortLess()
+    : activeSortFilter === 'sort-more'
+    ? sortMore()
+    : activeSortFilter === 'sort-new'
+    ? sortNew()
+    : sortOld()
+}
+
+addIncome.onclick = () => {
+  let { day, month, year } = getDate()
   let historyItem = new CreateHistoryItem(
-    historyArr.length,
+    idOfActivities, //historyArr.length,
     'income',
     incomeCategoriesLabel.innerHTML,
     Number(plusInputValue.value),
@@ -324,34 +339,15 @@ addIncome.onclick = () => {
     year
   )
   addActivities(historyItem, plusInputValue, plusInputDescription)
-  /* ---------- */
-  activeSortFilter === 'sort-less'
-    ? sortLess()
-    : activeSortFilter === 'sort-more'
-    ? sortMore()
-    : activeSortFilter === 'sort-new'
-    ? sortNew()
-    : sortOld()
-  /* ---------- */
+  checkFilter()
+  idOfActivities++
+  saveDataInLocalStorage()
 }
 
 addExpense.onclick = () => {
-  /* let date = new Date().toLocaleString('en', {
-    day: 'numeric',
-    month: 'numeric',
-    year: 'numeric',
-  }) */
-  let day = new Date().toLocaleString('en', {
-    day: 'numeric',
-  })
-  let month = new Date().toLocaleString('en', {
-    month: 'numeric',
-  })
-  let year = new Date().toLocaleString('en', {
-    year: 'numeric',
-  })
+  let { day, month, year } = getDate()
   let historyItem = new CreateHistoryItem(
-    historyArr.length,
+    idOfActivities, //historyArr.length,
     'expense',
     expenseCategoriesLabel.innerHTML,
     Number(minusInputValue.value),
@@ -362,13 +358,9 @@ addExpense.onclick = () => {
     year
   )
   addActivities(historyItem, minusInputValue, minusInputDescription)
-  activeSortFilter === 'sort-less'
-    ? sortLess()
-    : activeSortFilter === 'sort-more'
-    ? sortMore()
-    : activeSortFilter === 'sort-new'
-    ? sortNew()
-    : sortOld()
+  checkFilter()
+  idOfActivities++
+  saveDataInLocalStorage()
 }
 
 function addActivities(item, target, target2) {
@@ -380,7 +372,7 @@ function addActivities(item, target, target2) {
     createHistoryItem(el)
   })
   updateInfoScreen()
-  localStorage.setItem('budget', JSON.stringify(historyArr))
+  //localStorage.setItem('budget', JSON.stringify(historyArr))
 }
 let closeModal = document.querySelector('.modal-close')
 closeModal.onclick = () => {
@@ -517,82 +509,82 @@ let somearr = [
   {
     id: 0,
     type: 'income',
-    categorie: 'test',
+    categorie: 'zero',
     value: 0,
     color: 'green',
-    description: '0',
+    description: 'zero',
     date: '3/27/2021',
   },
   {
     id: 1,
     type: 'income',
-    categorie: 'test',
+    categorie: 'one',
     value: 1,
     color: 'green',
-    description: '1',
+    description: 'one',
     date: '3/27/2021',
   },
   {
     id: 2,
     type: 'income',
-    categorie: 'test',
+    categorie: 'two',
     value: 2,
     color: 'green',
-    description: '2',
+    description: 'two',
     date: '3/27/2021',
   },
   {
     id: 3,
     type: 'income',
-    categorie: 'test',
+    categorie: 'three',
     value: 3,
     color: 'green',
-    description: '3',
+    description: 'three',
     date: '3/27/2021',
   },
   {
     id: 4,
     type: 'income',
-    categorie: 'test',
+    categorie: 'four',
     value: 4,
     color: 'green',
-    description: '4',
+    description: 'four',
     date: '3/27/2021',
   },
   {
     id: 5,
     type: 'income',
-    categorie: 'test',
+    categorie: 'five',
     value: 5,
     color: 'green',
-    description: '5',
+    description: 'five',
     date: '3/27/2021',
   },
   {
     id: 6,
     type: 'income',
-    categorie: 'test',
+    categorie: 'six',
     value: 6,
     color: 'green',
-    description: '6',
+    description: 'six',
     date: '3/27/2021',
   },
   {
     id: 7,
     type: 'income',
-    categorie: 'test',
+    categorie: 'seven',
     value: 7,
     color: 'green',
-    description: '7',
+    description: 'seven',
     date: '3/27/2021',
   },
   {
     id: 8,
     type: 'income',
-    categorie: 'test',
+    categorie: 'eight',
     value: 8,
     color: 'green',
-    description: '8',
+    description: 'eight',
     date: '3/27/2021',
   },
 ]
