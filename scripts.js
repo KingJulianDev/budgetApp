@@ -44,15 +44,17 @@ if (!localStorage.budgetAppData) {
 }
 
 if (localStorage.budgetAppData) {
-  historyArr = JSON.parse(localStorage.getItem('budgetAppData'))[1]
+  historyArr = JSON.parse(localStorage.getItem('budgetAppData')).historyArr
   historyArr.forEach((el) => {
     createHistoryItem(el)
     updateInfoScreen()
   })
 
-  idOfActivities = JSON.parse(localStorage.getItem('budgetAppData'))[0]
+  idOfActivities = JSON.parse(localStorage.getItem('budgetAppData'))
+    .idOfActivities
 
-  incomeCategoriesArr = JSON.parse(localStorage.getItem('budgetAppData'))[2]
+  incomeCategoriesArr = JSON.parse(localStorage.getItem('budgetAppData'))
+    .incomeCategoriesArr
   let incomeArr = Array.from(incomeDropdownList.children)
   createCategoriesItem(
     incomeArr,
@@ -63,7 +65,8 @@ if (localStorage.budgetAppData) {
     'income-categorie-item'
   )
 
-  expenseCategoriesArr = JSON.parse(localStorage.getItem('budgetAppData'))[3]
+  expenseCategoriesArr = JSON.parse(localStorage.getItem('budgetAppData'))
+    .expenseCategoriesArr
   let expenseArr = Array.from(expenseDropdownList.children)
   createCategoriesItem(
     expenseArr,
@@ -74,14 +77,13 @@ if (localStorage.budgetAppData) {
     'expense-categorie-item'
   )
 }
-
 function saveDataInLocalStorage() {
-  let data = [
-    idOfActivities,
-    historyArr,
-    incomeCategoriesArr,
-    expenseCategoriesArr,
-  ]
+  let data = {
+    idOfActivities: idOfActivities,
+    historyArr: historyArr,
+    incomeCategoriesArr: incomeCategoriesArr,
+    expenseCategoriesArr: expenseCategoriesArr,
+  }
   localStorage.setItem('budgetAppData', JSON.stringify(data))
 }
 /* ---------------ВЫПАДАЮЩИЕ СПИСКИ КАТЕГОРИЙ--------------- */
@@ -321,13 +323,15 @@ function checkFilter() {
     ? sortMore()
     : activeSortFilter === 'sort-new'
     ? sortNew()
+    : activeSortFilter === 'sort-categorie'
+    ? sortCategorie()
     : sortOld()
 }
 
 addIncome.onclick = () => {
   let { day, month, year } = getDate()
   let historyItem = new CreateHistoryItem(
-    idOfActivities, //historyArr.length,
+    idOfActivities,
     'income',
     incomeCategoriesLabel.innerHTML,
     Number(plusInputValue.value),
@@ -346,7 +350,7 @@ addIncome.onclick = () => {
 addExpense.onclick = () => {
   let { day, month, year } = getDate()
   let historyItem = new CreateHistoryItem(
-    idOfActivities, //historyArr.length,
+    idOfActivities,
     'expense',
     expenseCategoriesLabel.innerHTML,
     Number(minusInputValue.value),
@@ -371,7 +375,6 @@ function addActivities(item, target, target2) {
     createHistoryItem(el)
   })
   updateInfoScreen()
-  //localStorage.setItem('budget', JSON.stringify(historyArr))
 }
 let closeModal = document.querySelector('.modal-close')
 closeModal.onclick = () => {
@@ -382,6 +385,7 @@ let sortNewButton = document.querySelector('.sort-new')
 let sortOldButton = document.querySelector('.sort-old')
 let sortMoreButton = document.querySelector('.sort-more')
 let sortLessButton = document.querySelector('.sort-less')
+let sortCategorieButton = document.querySelector('.sort-categorie')
 let testarr = [
   {
     categorie: '08/24/2021',
@@ -486,6 +490,15 @@ function sortNew() {
   })
   whichFilterIsActive(sortNewButton)
 }
+function sortCategorie() {
+  let sorted = historyArr.sort()
+  historyList.innerHTML = ''
+  sorted.forEach((el) => {
+    createHistoryItem(el)
+    updateInfoScreen()
+  })
+  whichFilterIsActive(sortCategorieButton)
+}
 /* --------------- */
 sortLessButton.onclick = (target) => {
   sortLess()
@@ -501,6 +514,10 @@ sortOldButton.onclick = (target) => {
 }
 sortNewButton.onclick = (target) => {
   sortNew()
+  activeSortFilter = target.target.id
+}
+sortCategorieButton.onclick = (target) => {
+  sortCategorie()
   activeSortFilter = target.target.id
 }
 /* --------------- */
