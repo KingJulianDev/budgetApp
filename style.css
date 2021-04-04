@@ -484,3 +484,26 @@ li > div {
   transform: scale(1.2);
 }
 /* ---------------- */
+#sort-categorie {
+  position: relative;
+}
+#sort-categorie:hover .sort-categorie-dropdown {
+  display: block;
+}
+.sort-categorie-dropdown {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  width: 100%;
+  display: none;
+  padding-top: 8px;
+}
+.sort-categorie-dropdown > li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+.sort-categorie-dropdown > li:hover {
+  background-color: skyblue;
+}

@@ -491,12 +491,30 @@ function sortNew() {
   whichFilterIsActive(sortNewButton)
 }
 function sortCategorie() {
-  let sorted = historyArr.sort()
+  incomeCategoriesArr.forEach((item) => {
+    let filtered = historyArr.filter((el) => el.categorie === item.name)
+    console.log(filtered)
+    let sum = 0
+    for (let i = 0; i < filtered.length; i++) {
+      sum += filtered[i].value
+    }
+    console.log(sum)
+  })
+  expenseCategoriesArr.forEach((item) => {
+    let filtered = historyArr.filter((el) => el.categorie === item.name)
+    console.log(filtered)
+    let sum = 0
+    for (let i = 0; i < filtered.length; i++) {
+      sum += filtered[i].value
+    }
+    console.log(sum)
+  })
+  /* let sorted = historyArr.sort()
   historyList.innerHTML = ''
   sorted.forEach((el) => {
     createHistoryItem(el)
     updateInfoScreen()
-  })
+  }) */
   whichFilterIsActive(sortCategorieButton)
 }
 /* --------------- */
