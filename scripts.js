@@ -491,30 +491,38 @@ function sortNew() {
   whichFilterIsActive(sortNewButton)
 }
 function sortCategorie() {
-  incomeCategoriesArr.forEach((item) => {
-    let filtered = historyArr.filter((el) => el.categorie === item.name)
-    console.log(filtered)
-    let sum = 0
-    for (let i = 0; i < filtered.length; i++) {
-      sum += filtered[i].value
-    }
-    console.log(sum)
-  })
-  expenseCategoriesArr.forEach((item) => {
-    let filtered = historyArr.filter((el) => el.categorie === item.name)
-    console.log(filtered)
-    let sum = 0
-    for (let i = 0; i < filtered.length; i++) {
-      sum += filtered[i].value
-    }
-    console.log(sum)
-  })
-  /* let sorted = historyArr.sort()
+  let totalCategoriesValue = []
+  function getSum(arr) {
+    arr.forEach((item) => {
+      let filtered = historyArr.filter((el) => el.categorie === item.name)
+      let sum = 0
+      for (let i = 0; i < filtered.length; i++) {
+        sum += filtered[i].value
+      }
+      totalCategoriesValue.push({
+        name: item.name,
+        value: sum,
+      })
+    })
+  }
+  getSum(incomeCategoriesArr)
+  getSum(expenseCategoriesArr)
+  console.log(totalCategoriesValue)
+  let sorted = totalCategoriesValue.sort((a, b) => a.value - b.value)
   historyList.innerHTML = ''
+  function render(el) {
+    historyList.insertAdjacentHTML(
+      `afterbegin`,
+      `<li class="history-item">
+        <div class="history-label">${el.name}</div>
+        <div class="history-value">$${el.value}</div>
+      </li>`
+    )
+  }
   sorted.forEach((el) => {
-    createHistoryItem(el)
-    updateInfoScreen()
-  }) */
+    render(el)
+  })
+  updateInfoScreen()
   whichFilterIsActive(sortCategorieButton)
 }
 /* --------------- */
