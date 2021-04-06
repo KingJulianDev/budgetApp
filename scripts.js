@@ -492,7 +492,7 @@ function sortNew() {
 }
 function sortCategorie() {
   let totalCategoriesValue = []
-  function getSum(arr) {
+  function getSum(arr, color) {
     arr.forEach((item) => {
       let filtered = historyArr.filter((el) => el.categorie === item.name)
       let sum = 0
@@ -502,11 +502,12 @@ function sortCategorie() {
       totalCategoriesValue.push({
         name: item.name,
         value: sum,
+        color: color,
       })
     })
   }
-  getSum(incomeCategoriesArr)
-  getSum(expenseCategoriesArr)
+  getSum(incomeCategoriesArr, 'green')
+  getSum(expenseCategoriesArr, 'red')
   console.log(totalCategoriesValue)
   let sorted = totalCategoriesValue.sort((a, b) => a.value - b.value)
   historyList.innerHTML = ''
@@ -514,7 +515,7 @@ function sortCategorie() {
     historyList.insertAdjacentHTML(
       `afterbegin`,
       `<li class="history-item">
-        <div class="history-label">${el.name}</div>
+        <div class="history-label ${el.color}">${el.name}</div>
         <div class="history-value">$${el.value}</div>
       </li>`
     )
